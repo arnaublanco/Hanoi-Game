@@ -4,12 +4,12 @@
 #include "main.h"
 
 // This function indicates a move of one disk
-void move(int towerorg, int towerdest,int **mat,int D){
+void move(int towerorg, int towerdest,int **mat,int D,int nd){
     
     printf("Move one disc from %d to %d\n", 
             towerorg, towerdest);
     
-    new_node(mat,D,towerorg,towerdest);
+    node_t n = new_node(mat,D,towerorg,towerdest,nd); //Create a new node
     
 }// move
 
@@ -20,11 +20,11 @@ void move(int towerorg, int towerdest,int **mat,int D){
 void hanoi(int nd,int towerorg,int towerdest,int toweraux,int **mat, int D){
     
     if (nd == 1){
-        move(towerorg, towerdest);
+        move(towerorg, towerdest, mat, D, nd);
     }
     else{
         hanoi(nd - 1, towerorg, toweraux, towerdest);
-        move(towerorg, towerdest);
+        move(towerorg, towerdest, mat, D, nd);
         hanoi(nd - 1, toweraux, towerdest, towerorg);
     }                                                     
 }// hanoi
@@ -36,11 +36,10 @@ int main(){
     scanf("%d",&n); //Ask the number of disks
     int **matrix = matrix_init(n); //Initialise the matrix
     
-    hanoiprint(node_t.matrix);
-  //  hanoi(nd, 0, 1, 2);
+    hanoi(n,0,1,2 //Call hanoi function
     
     return(0);
-} // main
+}
 
 void dotprint(int k){
      for(int c = 0; c<k; c++){
