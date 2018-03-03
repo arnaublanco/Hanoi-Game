@@ -1,4 +1,4 @@
-/*Created by; Gabriel Graells Solé
+/*Created by; Gabriel Graells Solé, Asfandyar Abbasi and Arnau Blanco
  * This functions has the menu option of the differents functions of the email
  */
 #include "menu.h"
@@ -9,7 +9,7 @@ void play_game()
    
 }
 
-void show_game()
+void show_game(int **matrix, int D)
 {
   
 }
