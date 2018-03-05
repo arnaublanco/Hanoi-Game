@@ -7,12 +7,14 @@
 #include "menu.h"
 #include "database.h"
 
-void play_game(stack *list)
+void play_game(stack *l)
 {
-   
+    push(int D,int org,int dest,int depth,stack *l);
+    interactive_disc(stack *l);
+    matrix_init(l);
 }
 
-void show_game(stack *list)
+void show_game(stack *l)
 {
   //CALL THE FUNCTIONS THAT CALCULATE THE MOVES AND ASK THE USER WHICH MOVE THEY WANT TO SEE
 }
@@ -21,7 +23,7 @@ int command(char *cmd){
     
 }
 
-void menu_directory(stack *list)
+void menu_directory(stack *l)
 {
     int option = menu_display();
     while (option != 0)
@@ -29,10 +31,10 @@ void menu_directory(stack *list)
         switch(option)
         {
             case PLAYGAME: 
-                    play_game(list);
+                    play_game(l);
                     break;
                 case SHOWGAME: 
-                    show_game(list);
+                    show_game(l);
                     break;
                     printf("Please enter a letter to continue\n");
             default:
