@@ -20,7 +20,7 @@ typedef struct{
     int num;
 }stack;
 
-void new_node(int D,int org,int dest,int depth,stack *l);
+void push(int D,int org,int dest,int depth,stack *l);
 void matrix_init(stack *list);
 
 #endif /* DATABASE_H */

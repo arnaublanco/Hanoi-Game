@@ -5,18 +5,19 @@
 #include <string.h>
 #include <stdlib.h>
 #include "menu.h"
+#include "database.h"
 
-
-void play_game()
+void play_game(stack *list)
 {
    
 }
 
-void show_game(int **matrix, int D)
+void show_game(stack *list)
 {
   
 }
-void menu_directory()
+
+void menu_directory(stack *list)
 {
     int option = menu_display();
     while (option != 0)
@@ -24,10 +25,10 @@ void menu_directory()
         switch(option)
         {
             case PLAYGAME: 
-                    play_game();
+                    play_game(list);
                     break;
                 case SHOWGAME: 
-                 //   show_game();
+                    show_game(list);
                     break;
                     printf("Please enter a letter to continue\n");
             default:
@@ -38,8 +39,6 @@ void menu_directory()
     }
     printf("Please enter a letter to continue\n");
 }
-
-
 
 int menu_display()
 {

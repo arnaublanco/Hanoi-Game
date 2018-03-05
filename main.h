@@ -2,7 +2,6 @@
 #define MAIN_H
 
 #include "database.h"
-#include "init.h"
 
 #define NTOWERS 3  //Declaration of the number of towers
 #define VERT_BAR "|" //Declaration of a vertical bar
@@ -12,7 +11,7 @@
 
 void move(int towerorg, int towerdest,stack list);
 void hanoi(int nd, int torg, int tdest, int taux, stack list);
-void hanoiprint(stack list);
+void hanoiprint(stack *list);
 
 #endif /* MAIN_H */
 

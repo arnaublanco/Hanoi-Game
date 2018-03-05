@@ -1,7 +1,7 @@
 #ifndef MENU_H
 #define	MENU_H
 
-/*Constant Variables*/
+//Constant variables
 #define PLAYGAME 1
 #define SHOWGAME 2
 

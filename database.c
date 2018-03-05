@@ -5,7 +5,7 @@
 #include "database.h"
 #include "main.h"
 
-void new_node(int D,int org,int dest,int depth, stack *l)
+void push(int D,int org,int dest,int depth, stack *l)
 {
     //Define the variables that will store the tops in tower origin and tower destination
     int toporg, topdest;
@@ -37,9 +37,9 @@ void new_node(int D,int org,int dest,int depth, stack *l)
     //TO-DO: Add depth, tower origin and tower destination
     
 }
-void matrix_init(stack *list)
+/*void matrix_init(stack *list)
 { 
     list->top->matrix = (int **)malloc(list->num * sizeof(int *)); 
     for (int i=0; i<list->num; i++)
          list->top->matrix[i]= (int *)malloc(NTOWERS * sizeof(int));
-}
+}*/
