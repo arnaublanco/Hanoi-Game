@@ -14,7 +14,11 @@ void play_game(stack *list)
 
 void show_game(stack *list)
 {
-  
+  //CALL THE FUNCTIONS THAT CALCULATE THE MOVES AND ASK THE USER WHICH MOVE THEY WANT TO SEE
+}
+
+int command(char *cmd){
+    
 }
 
 void menu_directory(stack *list)

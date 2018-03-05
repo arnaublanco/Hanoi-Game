@@ -21,6 +21,6 @@ typedef struct{
 }stack;
 
 void push(int D,int org,int dest,int depth,stack *l);
-void matrix_init(stack *list);
+void matrix_init(stack list);
 
 #endif /* DATABASE_H */

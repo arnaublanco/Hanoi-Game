@@ -39,7 +39,7 @@ int main(){
     printf("How many disks do you want to play with? ");
     scanf("%d",&n);
     list.num = n;
-    //matrix_init(&list); //Initialise the matrix according to the number of disks
+    matrix_init(list); //Initialise the matrix according to the number of disks
     
     hanoi(n,0,1,2,list); //Call hanoi function
     
