@@ -4,8 +4,10 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include "database.h"
 
-void matrix_init(int D);
+//void matrix_init(int D, stack list);
+
 
 #endif /* INIT_H */
 

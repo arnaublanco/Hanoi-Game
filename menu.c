@@ -24,7 +24,7 @@ void menu_directory()
                     play_game();
                     break;
                 case SHOWGAME: 
-                    show_game();
+                 //   show_game();
                     break;
                     printf("Please enter a letter to continue\n");
             default:

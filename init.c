@@ -1,12 +1,13 @@
 #include "init.h"
 #include "main.h"
 
-int** matrix_init(int D)
-{
-    int **matrix;
-    for (int i=0; i<D; i++)
-         matrix[i] = (int *)malloc(NTOWERS * sizeof(int));
+
+void matrix_init(int D, stack *list)
+{ 
     
-    return matrix;
+    list->top->matrix = (int **)malloc(D * sizeof(int *)); 
+    for (int i=0; i<D; i++)
+         list->top->matrix[i]= (int *)malloc(NTOWERS * sizeof(int));
+    
 
 }

@@ -4,39 +4,41 @@
 #include "main.h"
 
 // This function indicates a move of one disk
-void move(int towerorg, int towerdest,int **mat,int D,int nd){
+void move(int towerorg, int towerdest,int D,int nd,stack l){
     
     printf("Move one disc from %d to %d\n", 
             towerorg, towerdest);
     
-    node_t n = new_node(mat,D,towerorg,towerdest,nd); //Create a new node
-    
+    new_node(D,towerorg,towerdest,nd,l); //Create a new node
+    //nt D,int org,int dest,int depth, stack *l
 }// move
 
 // Recursive function to move nd disks from the origin tower towerorg, to 
 // destination tower towerdest, using toweraux as auxiliary tower.
 // it doesn't return anything and instead it prints information of the move of 
 // the disks to display
-void hanoi(int nd,int towerorg,int towerdest,int toweraux,int **mat, int D){
+void hanoi(int nd,int towerorg,int towerdest,int toweraux,int D, stack l){
     
     if (nd == 1){
-        move(towerorg, towerdest, mat, D, nd);
+        move(towerorg, towerdest, D, nd,l);
+        
+  //      hanoiprint(l.top->matrix);
     }
     else{
-        hanoi(nd - 1, towerorg, toweraux, towerdest);
-        move(towerorg, towerdest, mat, D, nd);
-        hanoi(nd - 1, toweraux, towerdest, towerorg);
+        hanoi(nd - 1, towerorg, toweraux, towerdest,D,l);
+        move(towerorg, towerdest,D, nd,l);
+        hanoi(nd - 1, toweraux, towerdest, towerorg,D,l);
     }                                                     
 }// hanoi
 
 int main(){    
-    
+    stack list;
     int n; //Number of disks the user wants
     printf("How many disks do you want?");
     scanf("%d",&n); //Ask the number of disks
-    int **matrix = matrix_init(n); //Initialise the matrix
+    matrix_init(n,list); //Initialise the matrix
     
-    hanoi(n,0,1,2 //Call hanoi function
+    hanoi(n,0,1,2,n,list); //Call hanoi function
     
     return(0);
 }
@@ -51,7 +53,7 @@ void dashprint(int c){
             printf("-");
 }
 }
-void hanoiprint(int *mat[]){
+/*void hanoiprint(int **mat){
     int dots1, dots2, dots3;
     for(int i = (NDISCS-1); i>=0; i--){
         dots1=(NDISCS-mat[0][i]);
@@ -79,3 +81,4 @@ void hanoiprint(int *mat[]){
         printf("\n");
     }
 }
+*/

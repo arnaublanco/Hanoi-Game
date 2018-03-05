@@ -17,11 +17,11 @@ struct node{
 typedef struct node node_t;
 //Declaration of the list
 typedef struct{
-    node_t *last;
+    node_t *top;
     int num;
-}list;
+}stack;
 
-node_t* new_node(int **mat,int D,int org,int dest,node_t last);
+void new_node(int D,int org,int dest,int depth,stack *l);
 
 //FOR LOOP: node.next
 
