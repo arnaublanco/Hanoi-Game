@@ -11,6 +11,8 @@
 /*Functions*/
 void play_game();
 void show_game();
+int menu_display();
+void menu_directory();
 
 
 #endif	/* MENU_H */

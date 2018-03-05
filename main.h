@@ -1,10 +1,18 @@
 #ifndef MAIN_H
 #define MAIN_H
 
-#define NDISCS    5 // Number of discs to consider
-#define NTOWERS   3 // Number of towers to consider: it cannot be changed in this version
 #include "database.h"
 #include "init.h"
+
+#define NTOWERS 3  //Declaration of the number of towers
+#define VERT_BAR "|" //Declaration of a vertical bar
+#define UNDERSC "_" //Declaration of an underscore
+#define DOT "." //Declaration of a dot
+#define TABSPACE "\t" //Declaration of tabulation space
+
+void move(int towerorg, int towerdest,stack list);
+void hanoi(int nd, int torg, int tdest, int taux, stack list);
+void hanoiprint(stack list);
 
 #endif /* MAIN_H */
 

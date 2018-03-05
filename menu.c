@@ -1,6 +1,9 @@
 /*Created by; Gabriel Graells Solé, Asfandyar Abbasi and Arnau Blanco
  * This functions has the menu option of the differents functions of the email
  */
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
 #include "menu.h"
 
 
@@ -53,10 +56,4 @@ int menu_display()
     printf("___________________________________________________________________________\n");
     printf("___________________________________________________________________________\n");
     return option;
-}
-
-int main()
-{
-    menu_directory();
-    return 0;
 }

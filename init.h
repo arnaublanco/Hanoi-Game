@@ -6,8 +6,7 @@
 #include <stdlib.h>
 #include "database.h"
 
-//void matrix_init(int D, stack list);
-
+void matrix_init(stack *list);
 
 #endif /* INIT_H */
 

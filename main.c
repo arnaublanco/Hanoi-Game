@@ -3,82 +3,74 @@
 #include <stdlib.h>
 #include "main.h"
 
-// This function indicates a move of one disk
-void move(int towerorg, int towerdest,int D,int nd,stack l){
+//Function that prints and creates a new move
+void move(int towerorg, int towerdest,stack list){
     
     printf("Move one disc from %d to %d\n", 
             towerorg, towerdest);
     
-    new_node(D,towerorg,towerdest,nd,l); //Create a new node
-    //nt D,int org,int dest,int depth, stack *l
-}// move
+    //new_node(D,towerorg,towerdest,nd,l); //Create a new node
+    hanoiprint(list);
+}
 
-// Recursive function to move nd disks from the origin tower towerorg, to 
-// destination tower towerdest, using toweraux as auxiliary tower.
-// it doesn't return anything and instead it prints information of the move of 
-// the disks to display
-void hanoi(int nd,int towerorg,int towerdest,int toweraux,int D, stack l){
+void hanoi(int nd, int torg, int tdest, int taux, stack list){
     
     if (nd == 1){
-        move(towerorg, towerdest, D, nd,l);
-        
-  //      hanoiprint(l.top->matrix);
+        move(torg, tdest, list);
     }
     else{
-        hanoi(nd - 1, towerorg, toweraux, towerdest,D,l);
-        move(towerorg, towerdest,D, nd,l);
-        hanoi(nd - 1, toweraux, towerdest, towerorg,D,l);
+        hanoi(nd - 1, torg, taux, tdest, list);
+        move(torg, tdest, list);
+        hanoi(nd - 1, taux, tdest, torg, list);
     }                                                     
-}// hanoi
+}
 
-int main(){    
-    stack list;
-    int n; //Number of disks the user wants
-    printf("How many disks do you want?");
-    scanf("%d",&n); //Ask the number of disks
-    matrix_init(n,list); //Initialise the matrix
+int main(){
     
-    hanoi(n,0,1,2,n,list); //Call hanoi function
+    /*STACK INITIALISATION*/
+    stack list;
+    list.top = NULL;
+    
+    /*REQUEST FOR THE NUMBER OF DISKS*/
+    int n;
+    printf("How many disks do you want?");
+    scanf("%d",&n);
+    list.num = n;
+    matrix_init(&list); //Initialise the matrix according to the number of disks
+    
+    hanoi(n,0,1,2,list); //Call hanoi function
     
     return(0);
 }
 
-void dotprint(int k){
-     for(int c = 0; c<k; c++){
-            printf(".");
-}
-}
-void dashprint(int c){
-    for (int k = 0;k <c; k++){
-            printf("-");
-}
-}
-/*void hanoiprint(int **mat){
-    int dots1, dots2, dots3;
-    for(int i = (NDISCS-1); i>=0; i--){
-        dots1=(NDISCS-mat[0][i]);
-        dotprint(dots1);
-        dashprint(mat[0][i]);
-        printf("|");
-        dashprint(mat[0][i]);
-        dotprint(dots1);
-        printf("  ");
-        
-        dots2=NDISCS-mat[1][i];
-        dotprint(dots2);
-        dashprint(mat[1][i]);
-        printf("|");
-        dashprint(mat[1][i]);
-        dotprint(dots2);
-        printf("  ");
-        
-        dots3=NDISCS-mat[2][i];
-        dotprint(dots3);
-        dashprint(mat[2][i]);
-        printf("|");
-        dashprint(mat[2][i]);
-        dotprint(dots3);
-        printf("\n");
+void hanoiprint(stack list){
+    /*LOOP TO PRINT EACH LINE OF THE DRAWING OF THE GAME*/
+    for(int i=0; i<list.num; i++){
+        for(int k=0; k<NTOWERS; k++){
+           int max = list.top->matrix[k][i]; //Declaration of the value in position k i in the matrix
+           /*PRINT DOT D-max TIMES*/ 
+           for(int j=0; j<list.num-max; j++)
+                printf("%s",DOT);
+           
+           /*PRINT UNDERSCORE max TIMES*/
+           for(int j=0; j<max; j++)
+                printf("%s",UNDERSC);
+           
+           /*PRINT VERTICAL BAR*/
+           printf("%s",VERT_BAR);
+           
+           /*PRINT DOT D-max TIMES*/
+            for(int j=0; j<list.num-max; j++)
+                printf("%s",DOT);
+           
+           /*PRINT UNDERSCORE max TIMES*/
+            for(int j=0; j<max; j++)
+                printf("%s",UNDERSC);
+           
+           //If it's not printing the last tower, then print a tabspace
+           if(i<list.num){
+               printf("%s",TABSPACE);
+           }
+        }
     }
 }
-*/
