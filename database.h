@@ -21,7 +21,6 @@ typedef struct{
 }stack;
 
 void new_node(int D,int org,int dest,int depth,stack *l);
-
-//FOR LOOP: node.next
+void matrix_init(stack *list);
 
 #endif /* DATABASE_H */

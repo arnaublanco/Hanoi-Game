@@ -5,10 +5,7 @@
 #define PLAYGAME 1
 #define SHOWGAME 2
 
-
-/*Struct*/
-
-/*Functions*/
+//Declaration of the functions
 void play_game();
 void show_game();
 int menu_display();

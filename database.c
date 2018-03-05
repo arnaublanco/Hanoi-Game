@@ -3,6 +3,7 @@
 #include <stdlib.h>
 
 #include "database.h"
+#include "main.h"
 
 void new_node(int D,int org,int dest,int depth, stack *l)
 {
@@ -35,4 +36,10 @@ void new_node(int D,int org,int dest,int depth, stack *l)
     l->num++; //Increase number of nodes by 1
     //TO-DO: Add depth, tower origin and tower destination
     
+}
+void matrix_init(stack *list)
+{ 
+    list->top->matrix = (int **)malloc(list->num * sizeof(int *)); 
+    for (int i=0; i<list->num; i++)
+         list->top->matrix[i]= (int *)malloc(NTOWERS * sizeof(int));
 }
