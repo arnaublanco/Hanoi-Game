@@ -35,11 +35,9 @@ int main(){
     list.top = NULL;
     
     /*REQUEST FOR THE NUMBER OF DISKS*/
-    int n;
-    printf("How many disks do you want to play with? ");
-    scanf("%d",&n);
+    int n = 5; //By default there will be 5 disks
     list.num = n;
-    matrix_init(list); //Initialise the matrix according to the number of disks
+    matrix_init(&list); //Initialise the matrix according to the number of disks
     
     hanoi(n,0,1,2,list); //Call hanoi function
     

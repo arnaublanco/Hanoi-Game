@@ -9,8 +9,8 @@
 
 void play_game(stack *l)
 {
-    push(int D,int org,int dest,int depth,stack *l);
-    interactive_disc(stack *l);
+    //push(D,org,dest,depth,l); //NO TENS D, org, dest NI depth DEFINITS
+    //interactive_disc(l); //ON HAS CREAT AQUESTA FUNCIÓ?
     matrix_init(l);
 }
 
