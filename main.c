@@ -35,16 +35,17 @@ int main(){
     list.top = NULL;
     
     /*REQUEST FOR THE NUMBER OF DISKS*/
-    int n = 5; //By default there will be 5 disks
+    int n = NDISKS; //By default there will be 5 disks
     list.num = n;
-    matrix_init(&list); //Initialise the matrix according to the number of disks
+    //matrix_init(&list); //Initialise the matrix according to the number of disks (WE HAVE PROBLEMS WITH THIS FUNCTION, SO MEANWHILE I'LL COMMENT IT)
     
     hanoi(n,0,1,2,list); //Call hanoi function
     
     return(0);
 }
 
-void hanoiprint(stack *list){
+void hanoiprint(stack *list,int torg,int tdest,int depth){
+    printf("Move count %d Rec Depth %d : it moves disc %d from T%d to T%d",list->num,depth,1,torg,tdest); //Print text line first (CHANGE 1 FOR THE DISC NUMBER)
     /*LOOP TO PRINT EACH LINE OF THE DRAWING OF THE GAME*/
     for(int i=0; i<list->num; i++){
         for(int k=0; k<NTOWERS; k++){
