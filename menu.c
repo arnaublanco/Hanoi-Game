@@ -6,45 +6,30 @@
 #include <stdlib.h>
 #include "menu.h"
 #include "database.h"
+#include "playgame.h"
+#include "main.h"
 
-void play_game(Database *db)
+void play_game(stack *l)
 {
-    //push(D,org,dest,depth,l); //NO TENS D, org, dest NI depth DEFINITS
-    //interactive_disc(l); //ON HAS CREAT AQUESTA FUNCIÓ?
-    matrix_init(db);
+    /*COUNTER INSIDE A LOOP*/
+    int counter = 0;
+    playgame_directory(l);
+    init_game(l);
+    hanoiprint(l);
+    makemove(l);
+    write_file(l, counter);
 }
 
-void show_game(Database *db)
+void show_game(stack *l)
 {
   //CALL THE FUNCTIONS THAT CALCULATE THE MOVES AND ASK THE USER WHICH MOVE THEY WANT TO SEE
 }
 
-/*FUNCTION THAT EXECUTES THE hanoiplus COMMAND*/
-int command(char *cmd,Database *db){
-    /*CHECK IF THE hanoiplus COMMAND HAS BEEN ENTERED*/
-    if(strcmp(strstr(HPLUS,cmd),cmd)==0){
-        /*EXECUTE -d COMMAND IF SPECIFIED*/
-        if(strcmp(strstr(DCMD,cmd),cmd)==0){
-            //GET THE NUMBER THAT USER HAS ENTERED
-            change_disks(0,db); //Call the function that changes the number of disks (CHANGE 0 FOR THE NUMBER OF DISKS!!)
-            return DRET;
-        }
-        /*EXECUTE -f COMMAND IF SPECIFIED*/
-        if(strcmp(strstr(FCMD,cmd),cmd)==0){
-            //Call the function that creates an external file
-            return FRET;
-        }
-        /*EXECUTE -o COMMAND IF SPECIFIED*/
-        if(strcmp(strstr(OCMD,cmd),cmd)==0){
-            //Call the function that calls the writing operation
-            return ORET;
-        }
-    }else{
-        return 0; //The command is not valid.
-    }
+int command(char *cmd){
+    
 }
 
-void menu_directory(Database *db)
+void menu_directory(stack *l)
 {
     int option = menu_display();
     while (option != 0)
@@ -52,10 +37,10 @@ void menu_directory(Database *db)
         switch(option)
         {
             case PLAYGAME: 
-                    play_game(db);
+                    play_game(l);
                     break;
                 case SHOWGAME: 
-                    show_game(db);
+                    show_game(l);
                     break;
                     printf("Please enter a letter to continue\n");
             default:

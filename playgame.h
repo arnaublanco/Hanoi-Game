@@ -2,9 +2,16 @@
 
 #ifndef PLAYGAME_H
 #define PLAYGAME_H
+/*variable*/
+#define OPTION 35
+#define OPTION_1 1
+#define OPTION_2 2
 
 /*Functions*/
-void interactive_disc(stack *l);
-
+void write_file(stack *l, int counter);
+void makemove(stack *l);
+void init_game(stack *l);
+void playgame_directory(stack *l);
+int interactive_disc(stack *l);
 #endif /* PLAYGAME_H */
 
