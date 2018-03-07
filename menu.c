@@ -19,8 +19,28 @@ void show_game(stack *l)
   //CALL THE FUNCTIONS THAT CALCULATE THE MOVES AND ASK THE USER WHICH MOVE THEY WANT TO SEE
 }
 
+/*FUNCTION THAT EXECUTES THE hanoiplus COMMAND*/
 int command(char *cmd){
-    
+    /*CHECK IF THE hanoiplus COMMAND HAS BEEN ENTERED*/
+    if(strcmp(strstr(HPLUS,cmd),cmd)==0){
+        /*EXECUTE -d COMMAND IF SPECIFIED*/
+        if(strcmp(strstr(DCMD,cmd),cmd)==0){ 
+            //Call the function that changes the number of disks
+            return DRET;
+        }
+        /*EXECUTE -f COMMAND IF SPECIFIED*/
+        if(strcmp(strstr(FCMD,cmd),cmd)==0){
+            //Call the function that creates an external file
+            return FRET;
+        }
+        /*EXECUTE -o COMMAND IF SPECIFIED*/
+        if(strcmp(strstr(OCMD,cmd),cmd)==0){
+            //Call the function that calls the writing operation
+            return ORET;
+        }
+    }else{
+        return 0; //The command is not valid.
+    }
 }
 
 void menu_directory(stack *l)
