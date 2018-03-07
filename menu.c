@@ -20,12 +20,13 @@ void show_game(Database *db)
 }
 
 /*FUNCTION THAT EXECUTES THE hanoiplus COMMAND*/
-int command(char *cmd){
+int command(char *cmd,Database *db){
     /*CHECK IF THE hanoiplus COMMAND HAS BEEN ENTERED*/
     if(strcmp(strstr(HPLUS,cmd),cmd)==0){
         /*EXECUTE -d COMMAND IF SPECIFIED*/
-        if(strcmp(strstr(DCMD,cmd),cmd)==0){ 
-            //Call the function that changes the number of disks
+        if(strcmp(strstr(DCMD,cmd),cmd)==0){
+            //GET THE NUMBER THAT USER HAS ENTERED
+            change_disks(0,db); //Call the function that changes the number of disks (CHANGE 0 FOR THE NUMBER OF DISKS!!)
             return DRET;
         }
         /*EXECUTE -f COMMAND IF SPECIFIED*/

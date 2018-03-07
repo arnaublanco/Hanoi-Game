@@ -37,13 +37,14 @@ void push(int D,int org,int dest,int depth, Database *db)/*SHOULDN'T THIS PARAME
     //TO-DO: Add depth, tower origin and tower destination
     
 }
+/*FUNCTION THAT INITIALISES THE MATRIX THAT WILL BE USED IN EVERY NODE*/
 void matrix_init(Database *db)
 { 
     db->list.top->matrix = (int **)malloc(db->list.num * sizeof(int *)); 
     for (int i=0; i<db->list.num; i++)
          db->list.top->matrix[i]= (int *)malloc(NTOWERS * sizeof(int));
 }
-
-void change_disks(int n){
-    
+/*FUNCTION THAT CHANGES THE NUMBER OF DISKS IN THE DB*/
+void change_disks(int n,Database *db){
+    db->ndisks = n;
 }

@@ -18,7 +18,7 @@ void play_game(Database *db);
 void show_game(Database *db);
 int menu_display();
 void menu_directory(Database *db);
-
+int command(char *cmd, Database *db);
 
 #endif	/* MENU_H */
 

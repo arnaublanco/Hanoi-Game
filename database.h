@@ -28,5 +28,6 @@ typedef struct{
 
 void push(int D,int org,int dest,int depth,Database *db);
 void matrix_init(Database *db);
+void change_disks(int n,Database *db);
 
 #endif /* DATABASE_H */
