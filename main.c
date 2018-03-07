@@ -4,24 +4,24 @@
 #include "main.h"
 
 //Function that prints and creates a new move
-void move(int towerorg, int towerdest,stack list){
+void move(int depth, int towerorg, int towerdest,Database *db){
     
     printf("Move one disc from %d to %d\n", 
             towerorg, towerdest);
     
     //new_node(D,towerorg,towerdest,nd,l); //Create a new node
-    hanoiprint(&list);
+    hanoiprint(db,towerorg,towerdest,depth);
 }
 
-void hanoi(int nd, int torg, int tdest, int taux, stack list){
+void hanoi(int nd, int torg, int tdest, int taux, Database *db){
     
     if (nd == 1){
-        move(torg, tdest, list);
+        move(nd, torg, tdest, db);
     }
     else{
-        hanoi(nd - 1, torg, taux, tdest, list);
-        move(torg, tdest, list);
-        hanoi(nd - 1, taux, tdest, torg, list);
+        hanoi(nd - 1, torg, taux, tdest, db);
+        move(nd, torg, tdest, db);
+        hanoi(nd - 1, taux, tdest, torg, db);
     }                                                     
 }
 
@@ -30,28 +30,26 @@ int main(){
     /*DESIGN GAME PRITING*/
     printf("HANOI GAME\n===========\n\n");
     
-    /*STACK INITIALISATION*/
-    stack list;
-    list.top = NULL;
+    /*DATABASE INITIALISATION*/
+    Database db;
+    db.list.top = NULL;
+    db.ndisks = NDISKS;
+    db.ntowers = NTOWERS;
+    //matrix_init(&db); //Initialise the matrix according to the number of disks (WE HAVE PROBLEMS WITH THIS FUNCTION, SO MEANWHILE I'LL COMMENT IT)
     
-    /*REQUEST FOR THE NUMBER OF DISKS*/
-    int n = NDISKS; //By default there will be 5 disks
-    list.num = n;
-    //matrix_init(&list); //Initialise the matrix according to the number of disks (WE HAVE PROBLEMS WITH THIS FUNCTION, SO MEANWHILE I'LL COMMENT IT)
-    
-    hanoi(n,0,1,2,list); //Call hanoi function
+    hanoi(db.ndisks,0,1,2,&db); //Call hanoi function
     
     return(0);
 }
 
-void hanoiprint(stack *list,int torg,int tdest,int depth){
-    printf("Move count %d Rec Depth %d : it moves disc %d from T%d to T%d",list->num,depth,1,torg,tdest); //Print text line first (CHANGE 1 FOR THE DISC NUMBER)
+void hanoiprint(Database *db,int torg,int tdest,int depth){
+    printf("Move count %d Rec Depth %d : it moves disc %d from T%d to T%d",db->list.num,depth,1,torg,tdest); //Print text line first (CHANGE 1 FOR THE DISC NUMBER)
     /*LOOP TO PRINT EACH LINE OF THE DRAWING OF THE GAME*/
-    for(int i=0; i<list->num; i++){
+    for(int i=0; i<db->list.num; i++){
         for(int k=0; k<NTOWERS; k++){
-           int max = list->top->matrix[k][i]; //Declaration of the value in position k i in the matrix
+           int max = db->list.top->matrix[k][i]; //Declaration of the value in position k i in the matrix
            /*PRINT DOT D-max TIMES*/ 
-           for(int j=0; j<list->num-max; j++)
+           for(int j=0; j<db->list.num-max; j++)
                 printf("%s",DOT);
            
            /*PRINT UNDERSCORE max TIMES*/
@@ -62,7 +60,7 @@ void hanoiprint(stack *list,int torg,int tdest,int depth){
            printf("%s",VERT_BAR);
            
            /*PRINT DOT D-max TIMES*/
-            for(int j=0; j<list->num-max; j++)
+            for(int j=0; j<db->list.num-max; j++)
                 printf("%s",DOT);
            
            /*PRINT UNDERSCORE max TIMES*/
@@ -70,7 +68,7 @@ void hanoiprint(stack *list,int torg,int tdest,int depth){
                 printf("%s",UNDERSC);
            
            //If it's not printing the last tower, then print a tabspace
-           if(i<list->num){
+           if(i<db->list.num){
                printf("%s",TABSPACE);
            }
         }

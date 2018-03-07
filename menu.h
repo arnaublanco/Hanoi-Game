@@ -1,6 +1,6 @@
 #ifndef MENU_H
 #define	MENU_H
-
+#include "database.h"
 /*CONSTANT VARIABLES FOR THE MENU OPTIONS*/
 #define PLAYGAME 1
 #define SHOWGAME 2
@@ -14,10 +14,10 @@
 #define ORET 3
 
 //Declaration of the functions
-void play_game();
-void show_game();
+void play_game(Database *db);
+void show_game(Database *db);
 int menu_display();
-void menu_directory();
+void menu_directory(Database *db);
 
 
 #endif	/* MENU_H */
