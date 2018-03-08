@@ -28,7 +28,7 @@ void hanoi(int nd, int torg, int tdest, int taux, stack list){
     }                                                     
 }
 
-int main(){
+int main(int argc, char**argv){
     
     /*DESIGN GAME PRITING*/
     printf("HANOI GAME\n===========\n\n");
@@ -36,23 +36,23 @@ int main(){
     /*STACK INITIALISATION*/
     stack list;
     list.top = NULL;
-    
-    /*REQUEST FOR THE NUMBER OF DISKS*/
-    int n = 5; //By default there will be 5 disks
-    list.num = n;
+    list.disks = NDISKS;
     matrix_init(&list); //Initialise the matrix according to the number of disks
     
-    hanoi(n,0,1,2,list); //Call hanoi function
+   /*REQUEST FOR GAME*/
+    //Call function that shows the options
+    
+    hanoi(list.num,0,1,2,list); //This will be deleted after we have implemented the function that calls the options
     return(0);
 }
 
 void hanoiprint(stack *list){
     /*LOOP TO PRINT EACH LINE OF THE DRAWING OF THE GAME*/
-    for(int i=0; i<list->num; i++){
+    for(int i=0; i<list->disks; i++){
         for(int k=0; k<NTOWERS; k++){
            int max = list->top->matrix[k][i]; //Declaration of the value in position k i in the matrix
            /*PRINT DOT D-max TIMES*/ 
-           for(int j=0; j<list->num-max; j++)
+           for(int j=0; j<list->disks-max; j++)
                 printf("%s",DOT);
            
            /*PRINT UNDERSCORE max TIMES*/
@@ -63,7 +63,7 @@ void hanoiprint(stack *list){
            printf("%s",VERT_BAR);
            
            /*PRINT DOT D-max TIMES*/
-            for(int j=0; j<list->num-max; j++)
+            for(int j=0; j<list->disks-max; j++)
                 printf("%s",DOT);
            
            /*PRINT UNDERSCORE max TIMES*/
@@ -71,7 +71,7 @@ void hanoiprint(stack *list){
                 printf("%s",UNDERSC);
            
            //If it's not printing the last tower, then print a tabspace
-           if(i<list->num){
+           if(i<list->disks){
                printf("%s",TABSPACE);
            }
         }

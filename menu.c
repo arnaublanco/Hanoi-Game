@@ -5,7 +5,6 @@
 #include <string.h>
 #include <stdlib.h>
 #include "menu.h"
-#include "database.h"
 #include "playgame.h"
 #include "main.h"
 
@@ -13,11 +12,11 @@ void play_game(stack *l)
 {
     /*COUNTER INSIDE A LOOP*/
     int counter = 0;
-    playgame_directory(l);
+    /*playgame_directory(l);
     init_game(l);
     hanoiprint(l);
     makemove(l);
-    write_file(l, counter);
+    write_file(l, counter);*/ //DE MOMENT HO DEIXO EN COMENTARIS PQ SI NO, NO EM COMPILA EL PROGRAMA
 }
 
 void show_game(stack *l)
@@ -25,8 +24,24 @@ void show_game(stack *l)
   //CALL THE FUNCTIONS THAT CALCULATE THE MOVES AND ASK THE USER WHICH MOVE THEY WANT TO SEE
 }
 
-int command(char *cmd){
-    
+/*FUNCTION THAT EXECUTES THE hanoiplus COMMAND*/
+int command(char **cmd, int narg, stack *l){
+    /*CHECK IF THE hanoiplus COMMAND HAS BEEN ENTERED*/
+    if(strcmp(strstr(HPLUS,cmd[1]),cmd[1])==0){
+      for(int i=1; i <= narg; i++){
+        if(strcmp(strstr(DCMD,cmd[i]),cmd[i])==0 && i<narg){ /*EXECUTE -d COMMAND IF SPECIFIED*/           
+            i++; //Increase i by 1 to go to the next command           
+            l->disks = *cmd[i]; //Change the number of disks to cmd[i]
+        }else if(strcmp(strstr(FCMD,cmd[i]),cmd[i])==0 && i<narg){ /*EXECUTE -f COMMAND IF SPECIFIED*/         
+            //Call the function that creates an external file
+        }else if(strcmp(strstr(OCMD,cmd[i]),cmd[i])==0 && i<narg){ /*EXECUTE -o COMMAND IF SPECIFIED*/           
+            //Call the function that calls the writing operation
+        }
+      }
+      return 1; //The command/s is/are valid.
+    }else{
+        return 0; //The command is not valid.
+    }
 }
 
 void menu_directory(stack *l)
