@@ -36,7 +36,7 @@ int main(int argc, char**argv){
     /*STACK INITIALISATION*/
     stack list;
     list.top = NULL;
-    list.disks = NDISKS;
+    command(argv,argc,list); //Check if there is any command
     matrix_init(&list); //Initialise the matrix according to the number of disks
     
    /*REQUEST FOR GAME*/
@@ -50,29 +50,31 @@ void hanoiprint(stack *list){
     /*LOOP TO PRINT EACH LINE OF THE DRAWING OF THE GAME*/
     for(int i=0; i<list->disks; i++){
         for(int k=0; k<NTOWERS; k++){
-           int max = list->top->matrix[k][i]; //Declaration of the value in position k i in the matrix
+           int mat = list->top->matrix[k][i]; //Declaration of the value in position k i in the matrix
            /*PRINT DOT D-max TIMES*/ 
-           for(int j=0; j<list->disks-max; j++)
+           for(int j=0; j<list->disks-mat; j++)
                 printf("%s",DOT);
            
            /*PRINT UNDERSCORE max TIMES*/
-           for(int j=0; j<max; j++)
+           for(int j=0; j<mat; j++)
                 printf("%s",UNDERSC);
            
            /*PRINT VERTICAL BAR*/
            printf("%s",VERT_BAR);
            
            /*PRINT DOT D-max TIMES*/
-            for(int j=0; j<list->disks-max; j++)
+            for(int j=0; j<list->disks-mat; j++)
                 printf("%s",DOT);
            
            /*PRINT UNDERSCORE max TIMES*/
-            for(int j=0; j<max; j++)
+            for(int j=0; j<mat; j++)
                 printf("%s",UNDERSC);
            
            //If it's not printing the last tower, then print a tabspace
-           if(i<list->disks){
+           if(k<NTOWERS){
                printf("%s",TABSPACE);
+           }else{
+               printf("%s",NEWLINE);
            }
         }
     }

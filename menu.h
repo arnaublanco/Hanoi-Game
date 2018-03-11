@@ -9,15 +9,19 @@
 #define DCMD "-d"
 #define FCMD "-f"
 #define OCMD "-o"
-#define DRET 1
-#define FRET 2
-#define ORET 3
+#define APCMD "ap"
+#define WCMD "w"
+#define TRUE 1
+#define FALSE 0
+#define APPEND 2
 
 //Declaration of the functions
 void play_game(stack *l);
 void show_game(stack *l);
 int menu_display();
 void menu_directory();
+void command(char **cmd, int narg, stack *l);
+void create_file(stack *l, char *name, int new_file);
 
 
 #endif	/* MENU_H */
