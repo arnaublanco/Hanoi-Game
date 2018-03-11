@@ -36,7 +36,7 @@ int main(int argc, char**argv){
     /*STACK INITIALISATION*/
     stack list;
     list.top = NULL;
-    command(argv,argc,list); //Check if there is any command
+    command(argv,argc,&list); //Check if there is any command
     matrix_init(&list); //Initialise the matrix according to the number of disks
     
    /*REQUEST FOR GAME*/
