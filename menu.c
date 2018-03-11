@@ -1,5 +1,5 @@
 /*Created by; Gabriel Graells Solé, Asfandyar Abbasi and Arnau Blanco
- * This functions has the menu option of the differents functions of the email
+ * This functions has the menu option of the different functions of the email
  */
 #include <stdio.h>
 #include <string.h>
@@ -12,11 +12,15 @@ void play_game(stack *l)
 {
     /*COUNTER INSIDE A LOOP*/
     int counter = 0;
-    /*playgame_directory(l);
+    
+    playgame_directory(l);
+    
     init_game(l);
-    hanoiprint(l);
-    makemove(l);
-    write_file(l, counter);*/ //DE MOMENT HO DEIXO EN COMENTARIS PQ SI NO, NO EM COMPILA EL PROGRAMA
+    while(end_game(l) == 1)
+    {
+        makemove(l);
+        /*if () condition that if becomes true makes a fprintf in to the given file*/
+    }
 }
 
 void show_game(stack *l)

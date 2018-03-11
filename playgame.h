@@ -6,8 +6,11 @@
 #define OPTION 35
 #define OPTION_1 1
 #define OPTION_2 2
+#define NTOWER 2
+
 
 /*Functions*/
+int end_game(stack *l);
 void write_file(stack *l, int counter);
 void makemove(stack *l);
 void init_game(stack *l);
