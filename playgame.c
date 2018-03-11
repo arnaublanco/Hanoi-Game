@@ -9,13 +9,13 @@
 #include "main.h"
 #include "playgame.h"
 
-/*The code uses an static matrix that is rewrited every time hat the user makes a move
+/*The code uses an static matrix that is rewritten every time hat the user makes a move
  since it is specified in the PDF that there is no need on keeping track of the movements
- -Makea counter to print the move number*/
+ -Make a counter to print the move number*/
 
 /*Print for command guides*/
 int interactive_disc(stack *l){
-    printf("Comandos:\n 1. '1': Type 'd' +Enter and when asked type the number of dics.\n"
+    printf("Commands:\n 1. '1': Type 'd' +Enter and when asked type the number of discs.\n"
             "2. '2': move, make a new move.\n"
             "   2.1 -How to do a move-: Select the disc by typing the tower number ('1,2,3') then "
             "type the tower number where you want to drop the disc.\n"
@@ -23,7 +23,7 @@ int interactive_disc(stack *l){
     char option;
     return option;
 }
-/*Switch for the commant*/
+/*Switch for the command*/
 void playgame_directory(stack *l){
     int option = interactive_disc(l);
     while(option != 0)
@@ -109,9 +109,9 @@ void write_file(stack *l, int counter)
         printf("\nERROR, file 'game.txt' not found.");
     }
     
-    f("_______________________________");
+    fprintf(f, "\n_______________________________");
     fprintf(f, "\nNumber of moves: %d\n", counter);
-    fputs("_______________________________");
+    fprintf(f, "_______________________________");
     
     for(int i=0; i<l->num; i++){
         for(int k=0; k<NTOWERS; k++){
@@ -141,5 +141,45 @@ void write_file(stack *l, int counter)
            }
         }
     }
+    
+}
+
+int end_game(stack *l)
+{
+    int **endmatrix;
+    int equal = 1;
+    /*space reservation for the end result matrix*/
+    endmatrix = (int **)malloc(l->num * sizeof(int *)); 
+    for (int i=0; i<l->num; i++)
+         endmatrix[i]= (int *)malloc(NTOWERS * sizeof(int));
+    
+    
+    /*Fill the endmatrix with the end disc positioning*/
+    int i, j;
+    for(i=0; i<l->num; i++)
+    {
+        for(j=0; j<NTOWERS; j++)
+        {
+           endmatrix[i][j]=-1;
+        }
+    }
+    
+    for(i=0; i<l->num; i++)
+    {
+        int counter;
+        endmatrix[i][NTOWER]= counter;
+        counter++;
+    }
+    
+    for(i=0; i<l->num; i++)
+    {
+        for(j=0; j<NTOWERS; j++)
+        {
+            if(l->top->matrix[i][j] != endmatrix[i][j])
+                equal = 0;
+                
+        }
+    }
+    return equal;
     
 }
