@@ -7,21 +7,20 @@
 #include "menu.h"
 #include "playgame.h"
 #include "main.h"
-
 void play_game(stack *l)
 {
+    /*COUNTER INSIDE A LOOP*/
+    int counter = 0;
+    
+    playgame_directory(l);
+    
     init_game(l);
     while(end_game(l) == 1)
     {
+        makemove(l);
         playgame_directory(l);
     }
 }
-
-void show_game(stack *l)
-{
-  //CALL THE FUNCTIONS THAT CALCULATE THE MOVES AND ASK THE USER WHICH MOVE THEY WANT TO SEE
-}
-
 /*FUNCTION THAT EXECUTES THE hanoiplus COMMAND*/
 void command(char **cmd, int narg, stack *l){
     int disks_changed = FALSE; //Variable to know if the disks have been changed or not
@@ -32,7 +31,7 @@ void command(char **cmd, int narg, stack *l){
       for(int i=0; i < narg; i++){
         if(strcmp(DCMD,cmd[i])==0 && i+1<narg){ /*EXECUTE -d COMMAND IF SPECIFIED*/
             i++; //Increase i by 1 to go to the next command           
-            l->disks = atoi(*cmd[i]); //Change the number of disks to cmd[i]
+            l->disk = atoi(cmd[i]); //Change the number of disks to cmd[i]
             disks_changed = TRUE; //The number of disks has changed
         }else if(strcmp(FCMD,cmd[i])==0){ /*EXECUTE -f COMMAND IF SPECIFIED*/
             //If there isn't another command afterwards, it means the program has to create a file. Otherwise, it has to show the moves on screen.
@@ -40,7 +39,7 @@ void command(char **cmd, int narg, stack *l){
                 if(strcmp(DCMD,cmd[i+1])==0 || strcmp(OCMD,cmd[i+1])==0){
                     //Call hanoiprint as many times as moves there are
                     for(int w=0; w<l->num; w++){
-                        hanoiprint(l);
+                        hanoiprint(l->top,l->num);
                     }
                 }else{
                     i++; //Increase i by 1 to go to the next command
@@ -50,7 +49,7 @@ void command(char **cmd, int narg, stack *l){
             }else{
                 //Call hanoiprint as many times as moves there are
                 for(int w=0; w<l->num; w++){
-                    hanoiprint(l);
+                    hanoiprint(l->top,l->num);
                 }
             }
         }else if(strcmp(OCMD,cmd[i])==0 && i+1<narg){ /*EXECUTE -o COMMAND IF SPECIFIED*/           
@@ -69,7 +68,7 @@ void command(char **cmd, int narg, stack *l){
     }
     //If the number disks has not been changed, then set it to its default value
     if(!disks_changed){
-        l->disks = NDISKS;
+        l->disk = NDISKS;
     }
 }
 
@@ -93,11 +92,11 @@ void create_file(stack *list, char *name, int new_file){
        for(int m=list->num; m>j+1; m--){
            current_node = current_node->prev;
        }
-       for(int i=0; i<list->disks; i++){
+       for(int i=0; i<list->disk; i++){
         for(int k=0; k<NTOWERS; k++){
            int mat = list->top->matrix[k][i]; //Declaration of the value in position k i in the matrix
            /*PRINT DOT D-max TIMES*/ 
-           for(int j=0; j<list->disks-mat; j++)
+           for(int j=0; j<list->disk-mat; j++)
                 printf("%s",DOT);
            
            /*PRINT UNDERSCORE max TIMES*/
@@ -108,7 +107,7 @@ void create_file(stack *list, char *name, int new_file){
            printf("%s",VERT_BAR);
            
            /*PRINT DOT D-max TIMES*/
-            for(int j=0; j<list->disks-mat; j++)
+            for(int j=0; j<list->disk-mat; j++)
                 printf("%s",DOT);
            
            /*PRINT UNDERSCORE max TIMES*/
@@ -124,44 +123,4 @@ void create_file(stack *list, char *name, int new_file){
         }
     } 
     }
-}
-
-void menu_directory(stack *l)
-{
-    int option = menu_display();
-    while (option != 0)
-    {
-        switch(option)
-        {
-            case PLAYGAME: 
-                    play_game(l);
-                    break;
-                case SHOWGAME: 
-                    show_game(l);
-                    break;
-                    printf("Please enter a letter to continue\n");
-            default:
-                printf("Invalid option\n");
-                break;
-        } 
-     option = menu_display();   
-    }
-    printf("Please enter a letter to continue\n");
-}
-
-int menu_display()
-{
-    int option;
-    printf("___________________________________________________________________________\n");
-    printf("___________________________________________________________________________\n");
-    printf("1-Play Hanoi Tower\n");
-    printf("2-See Hanoi Tower Solution\n");
-    printf("0-Quit\n");
-          
-   
-    printf("\nSelect option: ");
-    scanf("%d", &option);
-    printf("___________________________________________________________________________\n");
-    printf("___________________________________________________________________________\n");
-    return option;
 }
