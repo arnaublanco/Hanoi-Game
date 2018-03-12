@@ -20,10 +20,12 @@ typedef struct node node_t;
 typedef struct{
     node_t *top; //Variable that points to the last move
     int num; //Total number of moves
-    int disks; //Total number of disks
+    int disk; //Total number of disks
 }stack;
 
-void push(int D,int org,int dest,int depth,stack *l);
-void matrix_init(stack *l);
+void movedisk(stack *list, int towerorg, int towerdest);
+void push(stack *list,node_t *newnode);
+void createFirstNode(node_t *newnode,stack *list);
+node_t* encapsulateinfo(int n);
 
 #endif /* DATABASE_H */

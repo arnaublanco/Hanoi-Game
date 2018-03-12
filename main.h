@@ -11,9 +11,9 @@
 #define TABSPACE "\t" //Declaration of tabulation space
 #define NEWLINE "\n" //Declaration of new line
 
-void move(int towerorg, int towerdest,stack list);
-void hanoi(int nd, int torg, int tdest, int taux, stack list);
-void hanoiprint(stack *list);
+void move(int towerorg, int towerdest,stack *list);
+void hanoi(int nd, int torg, int tdest, int taux, stack *list);
+void hanoiprint(node_t *list, int numdisk);
 
 #endif /* MAIN_H */
 

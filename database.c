@@ -5,42 +5,67 @@
 #include "database.h"
 #include "main.h"
 
-void push(int D,int org,int dest,int depth, stack *l)
-{
-    //Define the variables that will store the tops in tower origin and tower destination
-    int toporg, topdest;
-    //Find the top in tower origin
-    for(int i=D-1; i>=0; i--)
-        //If position i in that matrix is equal to 0, it means in the previous position there is the top
-        if(l->top->matrix[org][i]==0){
-            break;
-        }else{
-            toporg = i;
+void movedisk(stack *list, int towerorg, int towerdest){
+    int n=list->disk;
+    node_t* newnode=encapsulateinfo(n);
+    int aux;
+    for(int c = 0; c < list->disk; c++){
+        for(int i = 0; i < NTOWERS; i++){
+            newnode->matrix[c][i]=list->top->matrix[c][i];
         }
-    //Find the top in tower destination
-    for(int i=D-1; i>=0; i--){
-        //If position i equals to 0, then there is an empty space
-        if(l->top->matrix[dest][i]==0)
-            topdest = i;
-            break;
-            
     }
-    //Fill those positions with their corresponding values
-    l->top->matrix[dest][topdest] = l->top->matrix[org][toporg];
-    l->top->matrix[org][toporg] = 0;
     
-    node_t returned_node; //Declare a new node
-    returned_node.matrix =  l->top->matrix; //Setting matrix
-    returned_node.prev = l->top; //Node points to the previous node
-    l->top = &returned_node; //List points to this new node, which is the last one
-    l->num++; //Increase number of nodes by 1
-    //TO-DO: Add depth, tower origin and tower destination
-    
+    //memcpy(&newnode,list->top,sizeof(node_t));
+    for(int c = 0; c < list->disk; c++){
+        if(list->top->matrix[c][towerorg]!=0){
+            newnode->matrix[c][towerorg]=0;
+            aux=list->top->matrix[c][towerorg];
+            break;
+        }  
+    }
+    for(int i = list->disk-1; i >= 0; i--){
+        if(list->top->matrix[i][towerdest]==0){
+            newnode->matrix[i][towerdest] = aux;
+            break;
+        }
+    }
+    push(list,newnode);
 }
-/*FUNCTION THAT INITIALISES THE MATRIX THAT WILL BE USED IN EVERY NODE*/
-void matrix_init(stack *l)
-{ 
-    l->top->matrix = (int **)malloc(l->disks * sizeof(int *)); 
-    for (int i=0; i<l->disks; i++)
-         l->top->matrix[i]= (int *)malloc(NTOWERS * sizeof(int));
+
+void push(stack *l,node_t *newnode){  
+    node_t aux;
+    aux=*l->top; 
+    //memcpy(&aux,l->top, sizeof(node_t)); 
+    l->top=newnode;
+    //memcpy(l->top,newnode, sizeof(node_t));
+    l->top->prev=&aux;
+    //memcpy(l->top->prev,&aux, sizeof(node_t));
+    l->top->depth+=1;    
+}
+
+
+void createFirstNode(node_t *newnode, stack *list){
+    for(int i=0; i<NDISKS; i++){
+        for(int j=0; j<NTOWERS; j++){
+            if(j==0){
+                newnode->matrix[i][j] = i+1;
+            }else{
+                newnode->matrix[i][j] = 0;
+            }
+        }
+    }
+    list->top=newnode;
+    //  memcpy(&list->top,&newnode,sizeof(node_t));
+}
+node_t* encapsulateinfo(int n){
+    node_t *newnode=(node_t *)malloc(sizeof(node_t));
+    newnode->depth=0;
+    newnode->prev=NULL;
+    newnode->tdest=0;
+    newnode->torg=0;
+    newnode->matrix=(int **)malloc(n * sizeof(int *));
+    for (int i=0; i<n; i++)
+        newnode->matrix[i]= (int *)malloc(NTOWERS * sizeof(int));
+    return newnode;
+    
 }
