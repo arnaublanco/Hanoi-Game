@@ -6,13 +6,15 @@
 #define OPTION 35
 #define OPTION_1 1
 #define OPTION_2 2
+#define OPTION_3 3
 #define NTOWER 2
 
 
 /*Functions*/
+void hanoiprintg(stack *l);
 int end_game(stack *l);
 void write_file(stack *l, int counter);
-void makemove(stack *l);
+void makemove(stack *l, int counter);
 void init_game(stack *l);
 void playgame_directory(stack *l);
 int interactive_disc(stack *l);
