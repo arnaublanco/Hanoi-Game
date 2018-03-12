@@ -10,16 +10,10 @@
 
 void play_game(stack *l)
 {
-    /*COUNTER INSIDE A LOOP*/
-    int counter = 0;
-    
-    playgame_directory(l);
-    
     init_game(l);
     while(end_game(l) == 1)
     {
-        makemove(l);
-        /*if () condition that if becomes true makes a fprintf in to the given file*/
+        playgame_directory(l);
     }
 }
 

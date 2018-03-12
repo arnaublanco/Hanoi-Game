@@ -15,23 +15,31 @@
 
 /*Print for command guides*/
 int interactive_disc(stack *l){
-    printf("Commands:\n 1. '1': Type 'd' +Enter and when asked type the number of discs.\n"
-            "2. '2': move, make a new move.\n"
-            "   2.1 -How to do a move-: Select the disc by typing the tower number ('1,2,3') then "
-            "type the tower number where you want to drop the disc.\n"
-            "3.- '0': to exit.");
+    printf("Play Hanoi Tower Menu:\n"
+            "1.Make a move: Typer 1.\n"
+            "2.Show current game state: Type 2.\n"
+            "3.Write in file current game state: Type 3.\n"
+            "0.Quit: Type 0 to end the game.\n");
     char option;
     return option;
 }
 /*Switch for the command*/
 void playgame_directory(stack *l){
     int option = interactive_disc(l);
+    int counter = 0;
     while(option != 0)
     {
         switch(option)
         {
             case OPTION_1:
-                init_game(l);
+                makemove(l, counter);
+                counter++;
+                break;
+            case OPTION_2:
+                hanoiprintg(l);
+                break;
+            case OPTION_3:
+                write_file(l, counter);
                 break;
             default:
                 printf("Invalid option\n");
@@ -42,11 +50,10 @@ void playgame_directory(stack *l){
     }
       
    
-}/*Ask for number of disck, creates and prints the init display*/
+}
+/*Initalices the tower matrix and sets to null or -1.*/
 void init_game(stack *l){
     int i, j;
-    printf("\nEnter the number of discs: ");
-    scanf("%d", &l->num);
     /*Init matrix*/
     matrix_init(l);
     
@@ -54,13 +61,13 @@ void init_game(stack *l){
     {
         for(j=0; j<NTOWERS; j++)
         {
-            l->top->matrix[i][j]=-1;
+            l->top->matrix[i][j]=0;
         }
     }
     
     for(i=0; i<l->num; i++)
     {
-        int counter;
+        int counter = 1;/*Used to fill the discs in each tower*/
         l->top->matrix[i][0]= counter;
         counter ++;
     }
@@ -72,41 +79,49 @@ void init_game(stack *l){
     l->top->tdest = NUL;
     l->top->torg = NUL;
 }
-void makemove(stack *l)
+/*Ask for the new move to the user, then calls to basic_write_file() function*/
+void makemove(stack *l, int counter)
 {
     int i, j;
     int getd;/*buf for disc*/
-    printf("Move disc from ");
+    printf("\nMove disc from ");
     scanf("%d", &l->top->torg);
     printf(" to tower ");
     scanf("%d", &l->top->tdest);
     
-    for(i=l->num; i>l->num; i--)
+    /*This looper starts with the top position the firts disc found is taken
+     placed un the buff disc and that possition is changed to empty  '0'*/
+    for(i=0; i<l->num; i++)
     {
-        if(l->top->matrix[i][l->top->torg] != -1)
+        if(l->top->matrix[i][l->top->torg] != 0)
         {
-            getd = l->top->matrix[i][l->top->torg];
+            getd = l->top->matrix[i][l->top->torg];/*getd collects the first disc*/
+            l->top->matrix[i][l->top->torg] = 0; /*that position is switched to 0*/
         }
     }
     
-    for(i=0; i<l->num; i++)
+    /*This loop starts with the lowest position of the dest tower, when it finds the first
+     *empty space drops the disc number contained in getd.
+     */
+    for(i=l->num; i>0; i--)
     {
      
-        if(l->top->matrix[i][l->top->torg] == -1)
+        if(l->top->matrix[i][l->top->tdest] == 0)
         {
-            l->top->matrix[i][l->top->torg] = getd;
+            l->top->matrix[i][l->top->tdest] = getd;
         }   
     }
-    
+  basic_write_file(l, counter);  
 }
-/*Each time that a game is initialized the file game.txt is rewrited!!!*/
+/*Creates/appends the file 'game.txt' this function prints the full graphic display of the game*/
 void write_file(stack *l, int counter)
 {
     FILE *f;
-    f = fopen("game.txt", "w");
+    f = fopen("game.txt", "a");
     if (f == NULL)
     {
-        printf("\nERROR, file 'game.txt' not found.");
+        printf("\nERROR, file 'game.txt' not found a new game file is going to be created.\n");
+        f = fopen("game.txt", "w");
     }
     
     fprintf(f, "\n_______________________________");
@@ -143,7 +158,7 @@ void write_file(stack *l, int counter)
     }
     
 }
-
+/*Creates the las possition of the game and compares it to the current one if match the game ends*/
 int end_game(stack *l)
 {
     int **endmatrix;
@@ -160,13 +175,13 @@ int end_game(stack *l)
     {
         for(j=0; j<NTOWERS; j++)
         {
-           endmatrix[i][j]=-1;
+           endmatrix[i][j]=0;
         }
     }
     
     for(i=0; i<l->num; i++)
     {
-        int counter;
+        int counter=1;
         endmatrix[i][NTOWER]= counter;
         counter++;
     }
@@ -181,5 +196,53 @@ int end_game(stack *l)
         }
     }
     return equal;
+    
+}
+/*Prints on the screen the full display game*/
+void hanoiprintg(stack *l){
+    /*LOOP TO PRINT EACH LINE OF THE DRAWING OF THE GAME*/
+    for(int i=0; i<l->disks; i++){
+        for(int k=0; k<NTOWERS; k++){
+           int mat = l->top->matrix[k][i]; //Declaration of the value in position k i in the matrix
+           /*PRINT DOT D-max TIMES*/ 
+           for(int j=0; j<l->disks-mat; j++)
+                printf("%s",DOT);
+           
+           /*PRINT UNDERSCORE max TIMES*/
+           for(int j=0; j<mat; j++)
+                printf("%s",UNDERSC);
+           
+           /*PRINT VERTICAL BAR*/
+           printf("%s",VERT_BAR);
+           
+           /*PRINT DOT D-max TIMES*/
+            for(int j=0; j<l->disks-mat; j++)
+                printf("%s",DOT);
+           
+           /*PRINT UNDERSCORE max TIMES*/
+            for(int j=0; j<mat; j++)
+                printf("%s",UNDERSC);
+           
+           //If it's not printing the last tower, then print a tabspace
+           if(k<NTOWERS){
+               printf("%s",TABSPACE);
+           }else{
+               printf("%s",NEWLINE);
+           }
+        }
+    }
+}
+/*Prints in file the basic information of each move*/
+void basic_write_file(stack *l)
+{
+    FILE *f;
+    f = fopen("game.txt", "a");
+    if ( f == NULL)
+    {
+        printf("\nERROR, file 'game.txt' not found, a new game file is going to be created.");
+        f = fopen("game.txt", "w");
+    }
+    
+    fprintf(f, "\nMove disc from %d tower to tower %d.", l->top->torg, l->top->tdest);
     
 }
