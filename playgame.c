@@ -54,8 +54,8 @@ void playgame_directory(stack *l){
 /*Initalices the tower matrix and sets to null or -1.*/
 void init_game(stack *l){
     int i, j;
-    /*Init matrix*/
-    matrix_init(l);
+    /*Init matrix LEFT*/
+    init_matrix(l);
     
     for(i=0; i<l->num; i++)
     {
@@ -111,7 +111,7 @@ void makemove(stack *l, int counter)
             l->top->matrix[i][l->top->tdest] = getd;
         }   
     }
-  basic_write_file(l, counter);  
+    basic_write_file(l, counter);  
 }
 /*Creates/appends the file 'game.txt' this function prints the full graphic display of the game*/
 void write_file(stack *l, int counter)
@@ -161,6 +161,7 @@ void write_file(stack *l, int counter)
 /*Creates the las possition of the game and compares it to the current one if match the game ends*/
 int end_game(stack *l)
 {
+    int mid_tower = 2;
     int **endmatrix;
     int equal = 1;
     /*space reservation for the end result matrix*/
@@ -182,7 +183,7 @@ int end_game(stack *l)
     for(i=0; i<l->num; i++)
     {
         int counter=1;
-        endmatrix[i][NTOWER]= counter;
+        endmatrix[i][mid_tower]= counter;
         counter++;
     }
     
@@ -196,16 +197,16 @@ int end_game(stack *l)
         }
     }
     return equal;
-    
+    equal = 1;/*init equal to 1 again*/
 }
 /*Prints on the screen the full display game*/
 void hanoiprintg(stack *l){
     /*LOOP TO PRINT EACH LINE OF THE DRAWING OF THE GAME*/
-    for(int i=0; i<l->disks; i++){
+    for(int i=0; i<l->disk; i++){
         for(int k=0; k<NTOWERS; k++){
            int mat = l->top->matrix[k][i]; //Declaration of the value in position k i in the matrix
            /*PRINT DOT D-max TIMES*/ 
-           for(int j=0; j<l->disks-mat; j++)
+           for(int j=0; j<l->disk-mat; j++)
                 printf("%s",DOT);
            
            /*PRINT UNDERSCORE max TIMES*/
@@ -216,7 +217,7 @@ void hanoiprintg(stack *l){
            printf("%s",VERT_BAR);
            
            /*PRINT DOT D-max TIMES*/
-            for(int j=0; j<l->disks-mat; j++)
+            for(int j=0; j<l->disk-mat; j++)
                 printf("%s",DOT);
            
            /*PRINT UNDERSCORE max TIMES*/
@@ -233,7 +234,7 @@ void hanoiprintg(stack *l){
     }
 }
 /*Prints in file the basic information of each move*/
-void basic_write_file(stack *l)
+void basic_write_file(stack *l, int counter)
 {
     FILE *f;
     f = fopen("game.txt", "a");
@@ -242,7 +243,20 @@ void basic_write_file(stack *l)
         printf("\nERROR, file 'game.txt' not found, a new game file is going to be created.");
         f = fopen("game.txt", "w");
     }
-    
+    fprintf(f, "\n_______________________________");
+    fprintf(f, "\nNumber of moves: %d\n", counter);
+    fprintf(f, "_______________________________");
     fprintf(f, "\nMove disc from %d tower to tower %d.", l->top->torg, l->top->tdest);
     
+}
+
+/*Creates a matrix inside the struct*/
+void init_matrix(stack *l)
+{
+   l->top->matrix = (int **)malloc(l->disk * NTOWERS * sizeof(int *));
+   for(int i; i<l->num; i++)
+   {
+       l->top->matrix[i]=(int *)malloc(NTOWERS * sizeof(int));
+           
+   }
 }

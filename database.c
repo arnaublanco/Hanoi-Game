@@ -45,7 +45,7 @@ void push(stack *l,node_t *newnode){
 
 
 void createFirstNode(node_t *newnode, stack *list){
-    for(int i=0; i<NDISKS; i++){
+    for(int i=0; i< list->disk; i++){
         for(int j=0; j<NTOWERS; j++){
             if(j==0){
                 newnode->matrix[i][j] = i+1;

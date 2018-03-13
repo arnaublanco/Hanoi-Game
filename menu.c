@@ -10,14 +10,9 @@
 void play_game(stack *l)
 {
     /*COUNTER INSIDE A LOOP*/
-    int counter = 0;
-    
-    playgame_directory(l);
-    
     init_game(l);
-    while(end_game(l) == 1)
+    while(end_game(l) != 1)
     {
-        makemove(l);
         playgame_directory(l);
     }
 }
@@ -27,7 +22,8 @@ void command(char **cmd, int narg, stack *l){
     int create_new = FALSE; //Variable to know if the user wants to create a new file or not
     char *name; //Variable that stores the name of the file that the user may want to create
     /*CHECK IF THE hanoiplus COMMAND HAS BEEN ENTERED*/
-    if(strcmp(HPLUS,cmd[1])==0){
+    if(narg > 1){
+    if(strcmp(HPLUS,cmd[1])==0){/*SEGMENTATION FAULT as there is no argument*/
       for(int i=0; i < narg; i++){
         if(strcmp(DCMD,cmd[i])==0 && i+1<narg){ /*EXECUTE -d COMMAND IF SPECIFIED*/
             i++; //Increase i by 1 to go to the next command           
@@ -66,6 +62,7 @@ void command(char **cmd, int narg, stack *l){
           create_file(l, name, FALSE); //Call the function that appends content at the end of a given file
       }
     }
+}else printf("\nERROR, no commands found.\n");
     //If the number disks has not been changed, then set it to its default value
     if(!disks_changed){
         l->disk = NDISKS;
@@ -123,4 +120,17 @@ void create_file(stack *list, char *name, int new_file){
         }
     } 
     }
+}
+
+
+int display_menu()
+{
+    int option;
+    printf("");/*MENU OPTION*/
+    return option;
+}
+
+void menu_directory(stack *l)
+{
+    
 }
