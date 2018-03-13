@@ -7,8 +7,10 @@
 #include "menu.h"
 #include "playgame.h"
 #include "main.h"
+
 void play_game(stack *l)
 {
+    printf("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
     /*COUNTER INSIDE A LOOP*/
     init_game(l);
     while(end_game(l) != 1)
@@ -126,11 +128,33 @@ void create_file(stack *list, char *name, int new_file){
 int display_menu()
 {
     int option;
-    printf("");/*MENU OPTION*/
+    printf("\nMenu Options.\n"
+            "1.Show Hanoi solution. Type 1.\n"
+            "2.Play Hanoi. Type 2.\n"
+            "0.Exit. Type 0.\n\n"
+            "Option: ");
+    scanf("%d", &option);
     return option;
 }
 
 void menu_directory(stack *l)
 {
+    int option;
+    option = display_menu();
     
+    while (option != 0)
+    {
+        switch(option)
+        {
+            case OPTION_1:
+                break;
+            case OPTION_2:
+                play_game(l);
+                break;
+            default:
+                printf("\nInvalid option.\n");
+                break;
+        }
+        option = display_menu();
+    }
 }
