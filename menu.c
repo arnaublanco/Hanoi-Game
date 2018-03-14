@@ -8,13 +8,17 @@
 #include "playgame.h"
 #include "main.h"
 
-void play_game(stack *l)
+int play_game(stack *l)
 {
     /*COUNTER INSIDE A LOOP*/
-    while(end_game(l) != 1)
-    {
+    int exit = 1;
+    while(end_game(l) != 1 && exit != 0)
+    {  
         playgame_directory(l);
+        printf("Type 0 again to exit.");
+        scanf("%d", &exit);
     }
+    return exit;
 }
 /*FUNCTION THAT EXECUTES THE hanoiplus COMMAND*/
 void command(char **cmd, int narg, stack *l){
@@ -145,15 +149,27 @@ void menu_directory(stack *l)
         switch(option)
         {
             case OPTION_1:
-                hanoi(l->disk, 0,1,2,l);
+                show_game(l);
                 break;
             case OPTION_2:
-                play_game(l);
+                option = play_game(l);
                 break;
             default:
                 printf("\nInvalid option.\n");
                 break;
         }
-        option = display_menu();
+        if(option!=0){
+            option = display_menu();
+        }
+    }
+}
+void show_game(stack *l){
+    int move;
+    node_t *current_node = l->top; //Create a node that points to the last node
+    printf("\nType the number of the move you want to see:");
+    scanf("%d",&move);
+    for(int m=l->num; m>move+1; m--){
+        hanoiprint(current_node,l->disk);
+        current_node = current_node->prev;
     }
 }

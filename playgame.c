@@ -15,7 +15,7 @@
 
 /*Print for command guides*/
 int interactive_disc(stack *l){
-    printf("Play Hanoi Tower Menu:\n"
+    printf("\nPlay Hanoi Tower Menu:\n"
             "1.Make a move: Typer 1.\n"
             "2.Show current game state: Type 2.\n"
             "3.Write in file current game state: Type 3.\n"
@@ -104,39 +104,34 @@ void write_file(stack *l, int counter)
     
     for(int i=0; i<l->disk; i++){
         for(int k=0; k<NTOWERS; k++){
-           int dashes = l->top->matrix[i][k]; //Declaration of the value in position k i in the matrix
-           int dots=l->disk-dashes;
+           int mat = l->top->matrix[k][i]; //Declaration of the value in position k i in the matrix
            /*PRINT DOT D-max TIMES*/ 
-           for(int j=0; j<dots; j++)
-                fprintf(f, ".");
+           for(int j=0; j<l->disk-mat; j++)
+                fprintf(f,"%s",DOT);
            
            /*PRINT UNDERSCORE max TIMES*/
-           for(int j=0; j<dashes; j++)
-                fprintf(f, "-");
+           for(int j=0; j<mat; j++)
+                fprintf(f,"%s",UNDERSC);
            
            /*PRINT VERTICAL BAR*/
-           fprintf(f, "|");
-           
-           /*PRINT UNDERSCORE max TIMES*/
-            for(int j=0; j<dashes; j++)
-                fprintf(f, "-");
+           fprintf(f,"%s",VERT_BAR);
            
            /*PRINT DOT D-max TIMES*/
-            for(int j=0; j<dots; j++)
-                fprintf(f, ".");
+            for(int j=0; j<l->disk-mat; j++)
+                fprintf(f,"%s",DOT);
            
-           
+           /*PRINT UNDERSCORE max TIMES*/
+            for(int j=0; j<mat; j++)
+                fprintf(f,"%s",UNDERSC);
            
            //If it's not printing the last tower, then print a tabspace
-           if(k<NTOWERS-1){
-               fprintf(f, "%s",TABSPACE);
-           }
-           else{
-               fprintf(f, "\n");
+           if(k<NTOWERS){
+               fprintf(f,"%s",TABSPACE);
+           }else{
+               fprintf(f,"%s",NEWLINE);
            }
         }
     }
-    fprintf(f, "\n");
     
 }
 /*Creates the las possition of the game and compares it to the current one if match the game ends*/

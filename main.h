@@ -13,7 +13,7 @@
 
 void move(int towerorg, int towerdest,stack *list);
 void hanoi(int nd, int torg, int tdest, int taux, stack *list);
-void hanoiprint(node_t *list, int numdisk);
+void hanoiprint(node_t *current_node, int numdisks);
 
 #endif /* MAIN_H */
 

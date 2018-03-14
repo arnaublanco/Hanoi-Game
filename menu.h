@@ -16,7 +16,7 @@
 #define APPEND 2
 
 //Declaration of the functions
-void play_game(stack *l);
+int play_game(stack *l);
 void show_game(stack *l);
 int menu_display();
 void menu_directory();
