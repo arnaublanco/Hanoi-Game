@@ -10,9 +10,7 @@
 
 void play_game(stack *l)
 {
-    printf("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
     /*COUNTER INSIDE A LOOP*/
-    init_game(l);
     while(end_game(l) != 1)
     {
         playgame_directory(l);
@@ -25,46 +23,46 @@ void command(char **cmd, int narg, stack *l){
     char *name; //Variable that stores the name of the file that the user may want to create
     /*CHECK IF THE hanoiplus COMMAND HAS BEEN ENTERED*/
     if(narg > 1){
-    if(strcmp(HPLUS,cmd[1])==0){/*SEGMENTATION FAULT as there is no argument*/
-      for(int i=0; i < narg; i++){
-        if(strcmp(DCMD,cmd[i])==0 && i+1<narg){ /*EXECUTE -d COMMAND IF SPECIFIED*/
-            i++; //Increase i by 1 to go to the next command           
-            l->disk = atoi(cmd[i]); //Change the number of disks to cmd[i]
-            disks_changed = TRUE; //The number of disks has changed
-        }else if(strcmp(FCMD,cmd[i])==0){ /*EXECUTE -f COMMAND IF SPECIFIED*/
-            //If there isn't another command afterwards, it means the program has to create a file. Otherwise, it has to show the moves on screen.
-            if(cmd[i+1]){
-                if(strcmp(DCMD,cmd[i+1])==0 || strcmp(OCMD,cmd[i+1])==0){
+        if(strcmp(HPLUS,cmd[1])==0){/*SEGMENTATION FAULT as there is no argument*/
+          for(int i=0; i < narg; i++){
+            if(strcmp(DCMD,cmd[i])==0 && i+1<narg){ /*EXECUTE -d COMMAND IF SPECIFIED*/
+                i++; //Increase i by 1 to go to the next command           
+                l->disk = atoi(cmd[i]); //Change the number of disks to cmd[i]
+                disks_changed = TRUE; //The number of disks has changed
+            }else if(strcmp(FCMD,cmd[i])==0){ /*EXECUTE -f COMMAND IF SPECIFIED*/
+                //If there isn't another command afterwards, it means the program has to create a file. Otherwise, it has to show the moves on screen.
+                if(cmd[i+1]){
+                    if(strcmp(DCMD,cmd[i+1])==0 || strcmp(OCMD,cmd[i+1])==0){
+                        //Call hanoiprint as many times as moves there are
+                        for(int w=0; w<l->num; w++){
+                            hanoiprint(l->top,l->num);
+                        }
+                    }else{
+                        i++; //Increase i by 1 to go to the next command
+                        create_new = TRUE; //The program will create a new file
+                        name = cmd[i]; //Store the name of the file in 'name'
+                    }
+                }else{
                     //Call hanoiprint as many times as moves there are
                     for(int w=0; w<l->num; w++){
                         hanoiprint(l->top,l->num);
                     }
-                }else{
-                    i++; //Increase i by 1 to go to the next command
-                    create_new = TRUE; //The program will create a new file
-                    name = cmd[i]; //Store the name of the file in 'name'
                 }
-            }else{
-                //Call hanoiprint as many times as moves there are
-                for(int w=0; w<l->num; w++){
-                    hanoiprint(l->top,l->num);
+            }else if(strcmp(OCMD,cmd[i])==0 && i+1<narg){ /*EXECUTE -o COMMAND IF SPECIFIED*/           
+                if(strcmp(APCMD,cmd[i])==0){
+                    create_new = APPEND; //Get the given file and append the content at the end of it
+                }else if(strcmp(WCMD,cmd[i])==0){
+                    create_new = TRUE; //Create the same file, that is, overwrite it
                 }
             }
-        }else if(strcmp(OCMD,cmd[i])==0 && i+1<narg){ /*EXECUTE -o COMMAND IF SPECIFIED*/           
-            if(strcmp(APCMD,cmd[i])==0){
-                create_new = APPEND; //Get the given file and append the content at the end of it
-            }else if(strcmp(WCMD,cmd[i])==0){
-                create_new = TRUE; //Create the same file, that is, overwrite it
-            }
+          }
+          if(create_new==TRUE){
+              create_file(l, name, TRUE); //Call the function that creates an external file or overwrites it
+          }else if(create_new==APPEND){
+              create_file(l, name, FALSE); //Call the function that appends content at the end of a given file
+          }
         }
-      }
-      if(create_new==TRUE){
-          create_file(l, name, TRUE); //Call the function that creates an external file or overwrites it
-      }else if(create_new==APPEND){
-          create_file(l, name, FALSE); //Call the function that appends content at the end of a given file
-      }
     }
-}else printf("\nERROR, no commands found.\n");
     //If the number disks has not been changed, then set it to its default value
     if(!disks_changed){
         l->disk = NDISKS;
@@ -147,6 +145,7 @@ void menu_directory(stack *l)
         switch(option)
         {
             case OPTION_1:
+                hanoi(l->disk, 0,1,2,l);
                 break;
             case OPTION_2:
                 play_game(l);

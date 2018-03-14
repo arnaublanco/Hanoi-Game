@@ -33,12 +33,10 @@ int main(int argc, char **argv){
     stack list;
     command(argv,argc,&list);
     /*REQUEST FOR THE NUMBER OF DISKS*/
-    int n = NDISKS; //By default there will be 5 disks
-    list.disk=n;
-    node_t* newnode=encapsulateinfo(n); //Initialise the matrix according to the number of disks
+    node_t* newnode=encapsulateinfo(list.disk); //Initialise the matrix according to the number of disks
     createFirstNode(newnode,&list); //create new node function
-    hanoiprint(list.top,list.disk);
-    hanoi(n,0,1,2,&list); //Call hanoi function
+    menu_directory(&list);
+    
     
     return(0);
 }

@@ -20,7 +20,8 @@ int interactive_disc(stack *l){
             "2.Show current game state: Type 2.\n"
             "3.Write in file current game state: Type 3.\n"
             "0.Quit: Type 0 to end the game.\n");
-    char option;
+    int option;
+    scanf("%d", &option);
     return option;
 }
 /*Switch for the command*/
@@ -51,34 +52,7 @@ void playgame_directory(stack *l){
       
    
 }
-/*Initalices the tower matrix and sets to null or -1.*/
-void init_game(stack *l){
-    int i, j;
-    /*Init matrix LEFT*/
-    init_matrix(l);
-    
-    for(i=0; i<l->num; i++)
-    {
-        for(j=0; j<NTOWERS; j++)
-        {
-            l->top->matrix[i][j]=0;
-        }
-    }
-    
-    for(i=0; i<l->num; i++)
-    {
-        int counter = 1;/*Used to fill the discs in each tower*/
-        l->top->matrix[i][0]= counter;
-        counter ++;
-    }
- 
-            
-    /*Fill unused parameters*/
-    l->top->depth = NUL;
-    l->top->prev = NULL;
-    l->top->tdest = NUL;
-    l->top->torg = NUL;
-}
+
 /*Ask for the new move to the user, then calls to basic_write_file() function*/
 void makemove(stack *l, int counter)
 {
@@ -128,51 +102,58 @@ void write_file(stack *l, int counter)
     fprintf(f, "\nNumber of moves: %d\n", counter);
     fprintf(f, "_______________________________");
     
-    for(int i=0; i<l->num; i++){
+    for(int i=0; i<l->disk; i++){
         for(int k=0; k<NTOWERS; k++){
-           int max = l->top->matrix[k][i]; //Declaration of the value in position k i in the matrix
+           int dashes = l->top->matrix[i][k]; //Declaration of the value in position k i in the matrix
+           int dots=l->disk-dashes;
            /*PRINT DOT D-max TIMES*/ 
-           for(int j=0; j<l->num-max; j++)
-                fprintf(f,"%s",DOT);
+           for(int j=0; j<dots; j++)
+                fprintf(f, ".");
            
            /*PRINT UNDERSCORE max TIMES*/
-           for(int j=0; j<max; j++)
-                fprintf(f,"%s",UNDERSC);
+           for(int j=0; j<dashes; j++)
+                fprintf(f, "-");
            
            /*PRINT VERTICAL BAR*/
-           fprintf(f, "%s",VERT_BAR);
-           
-           /*PRINT DOT D-max TIMES*/
-            for(int j=0; j<l->num-max; j++)
-               fprintf(f, "%s",DOT);
+           fprintf(f, "|");
            
            /*PRINT UNDERSCORE max TIMES*/
-            for(int j=0; j<max; j++)
-                fprintf(f, "%s",UNDERSC);
+            for(int j=0; j<dashes; j++)
+                fprintf(f, "-");
+           
+           /*PRINT DOT D-max TIMES*/
+            for(int j=0; j<dots; j++)
+                fprintf(f, ".");
+           
+           
            
            //If it's not printing the last tower, then print a tabspace
-           if(i<l->num){
+           if(k<NTOWERS-1){
                fprintf(f, "%s",TABSPACE);
+           }
+           else{
+               fprintf(f, "\n");
            }
         }
     }
+    fprintf(f, "\n");
     
 }
 /*Creates the las possition of the game and compares it to the current one if match the game ends*/
 int end_game(stack *l)
 {
-    int mid_tower = 2;
+    int mid_tower = 1;
     int **endmatrix;
     int equal = 1;
     /*space reservation for the end result matrix*/
-    endmatrix = (int **)malloc(l->num * sizeof(int *)); 
-    for (int i=0; i<l->num; i++)
+    endmatrix = (int **)malloc(l->disk * sizeof(int *)); 
+    for (int i=0; i<l->disk; i++)
          endmatrix[i]= (int *)malloc(NTOWERS * sizeof(int));
     
     
     /*Fill the endmatrix with the end disc positioning*/
     int i, j;
-    for(i=0; i<l->num; i++)
+    for(i=0; i<l->disk; i++)
     {
         for(j=0; j<NTOWERS; j++)
         {
@@ -180,14 +161,14 @@ int end_game(stack *l)
         }
     }
     
-    for(i=0; i<l->num; i++)
+    for(i=0; i<l->disk; i++)
     {
         int counter=1;
         endmatrix[i][mid_tower]= counter;
         counter++;
     }
     
-    for(i=0; i<l->num; i++)
+    for(i=0; i<l->disk; i++)
     {
         for(j=0; j<NTOWERS; j++)
         {
@@ -197,7 +178,6 @@ int end_game(stack *l)
         }
     }
     return equal;
-    equal = 1;/*init equal to 1 again*/
 }
 /*Prints on the screen the full display game*/
 void hanoiprintg(stack *l){
@@ -248,15 +228,4 @@ void basic_write_file(stack *l, int counter)
     fprintf(f, "_______________________________");
     fprintf(f, "\nMove disc from %d tower to tower %d.", l->top->torg, l->top->tdest);
     
-}
-
-/*Creates a matrix inside the struct*/
-void init_matrix(stack *l)
-{
-   l->top->matrix = (int **)malloc(l->disk * NTOWERS * sizeof(int *));
-   for(int i; i<l->num; i++)
-   {
-       l->top->matrix[i]=(int *)malloc(NTOWERS * sizeof(int));
-           
-   }
 }
