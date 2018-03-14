@@ -6,24 +6,21 @@
 #include "main.h"
 
 void movedisk(stack *list, int towerorg, int towerdest){
-    int n=list->disk;
-    node_t* newnode=encapsulateinfo(n);
+    node_t* newnode = encapsulateinfo(list->disks);
     int aux;
-    for(int c = 0; c < list->disk; c++){
+    for(int c = 0; c < list->disks; c++){
         for(int i = 0; i < NTOWERS; i++){
-            newnode->matrix[c][i]=list->top->matrix[c][i];
+            newnode->matrix[c][i] = list->top->matrix[c][i];
         }
     }
-    
-    //memcpy(&newnode,list->top,sizeof(node_t));
-    for(int c = 0; c < list->disk; c++){
+    for(int c = 0; c < list->disks; c++){
         if(list->top->matrix[c][towerorg]!=0){
             newnode->matrix[c][towerorg]=0;
-            aux=list->top->matrix[c][towerorg];
+            aux = list->top->matrix[c][towerorg];
             break;
         }  
     }
-    for(int i = list->disk-1; i >= 0; i--){
+    for(int i = list->disks-1; i >= 0; i--){
         if(list->top->matrix[i][towerdest]==0){
             newnode->matrix[i][towerdest] = aux;
             break;
@@ -33,14 +30,14 @@ void movedisk(stack *list, int towerorg, int towerdest){
 }
 
 void push(stack *l,node_t *newnode){  
-    newnode->prev=l->top; //Newnode points to old node 
-    l->top=newnode; 
-    l->top->depth+=1;    
+    newnode->prev=l->top; //Newnode points now to old node
+    l->top=newnode; //Top points now to new node
+    l->top->depth++; //Increase depth by 1
 }
 
 
 void createFirstNode(node_t *newnode, stack *list){
-    for(int i=0; i< list->disk; i++){
+    for(int i=0; i< list->disks; i++){
         for(int j=0; j<NTOWERS; j++){
             if(j==0){
                 newnode->matrix[i][j] = i+1;

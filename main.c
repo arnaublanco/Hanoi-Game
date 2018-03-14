@@ -8,7 +8,7 @@
 //Function that prints and creates a new move
 void move(int towerorg, int towerdest,stack *list){
     movedisk(list, towerorg, towerdest);
-    list->num++;
+    list->moves++;
 }
 
 void hanoi(int nd, int torg, int tdest, int taux, stack *list){
@@ -23,18 +23,18 @@ void hanoi(int nd, int torg, int tdest, int taux, stack *list){
 }
 
 int main(int argc, char **argv){
-    /*DESIGN GAME PRITING*/
-    printf("HANOI GAME\n===========\n\n");
     
     /*STACK INITIALISATION*/
     stack list;
     command(argv,argc,&list);
+    
     /*REQUEST FOR THE NUMBER OF DISKS*/
-    node_t* newnode=encapsulateinfo(list.disk); //Initialise the matrix according to the number of disks
-    createFirstNode(newnode,&list); //create new node function
-    hanoi(list.disk,0,1,2,&list);
-    menu_directory(&list);
-    return(0);
+    node_t* newnode = encapsulateinfo(list.disks); //Initialise the matrix according to the number of disks in a node
+    createFirstNode(newnode,&list); //Create the first node
+    hanoi(list.disks,TSTART,TAUX,TEND,&list); //Call function that calculates the number of moves of the game
+    menu_directory(&list); //Call function that shows the menu to the user
+    
+    return 0;
 }
 
 void hanoiprint(node_t *current_node,int numdisks){
@@ -42,36 +42,34 @@ void hanoiprint(node_t *current_node,int numdisks){
     for(int i=0; i<numdisks; i++){
         for(int k=0; k<NTOWERS; k++){
            int dashes = current_node->matrix[i][k]; //Declaration of the value in position k i in the matrix
-           int dots=numdisks-dashes;
-           /*PRINT DOT D-max TIMES*/ 
+           int dots = numdisks-dashes; //Declaration of the number of dots
+           /*PRINT DOT numdisks-dashes TIMES*/ 
            for(int j=0; j<dots; j++)
-                printf(".");
+                printf("%s",DOT);
            
-           /*PRINT UNDERSCORE max TIMES*/
+           /*PRINT UNDERSCORE dashes TIMES*/
            for(int j=0; j<dashes; j++)
-                printf("-");
+                printf("%s",DASH);
            
            /*PRINT VERTICAL BAR*/
-           printf("|");
+           printf("%s",VERT_BAR);
            
-           /*PRINT UNDERSCORE max TIMES*/
+           /*PRINT UNDERSCORE dashes TIMES*/
             for(int j=0; j<dashes; j++)
-                printf("-");
+                printf("%s",DASH);
            
-           /*PRINT DOT D-max TIMES*/
+           /*PRINT DOT numdisks-dashes TIMES*/
             for(int j=0; j<dots; j++)
-                printf(".");
-           
-           
-           
+                printf("%s",DOT);
+
            //If it's not printing the last tower, then print a tabspace
            if(k<NTOWERS-1){
                printf("%s",TABSPACE);
            }
            else{
-               printf("\n");
+               printf("%s",NEWLINE);
            }
         }
     }
-    printf("\n");
+    printf("%s",NEWLINE);
 }

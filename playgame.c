@@ -15,35 +15,35 @@
 
 /*Print for command guides*/
 int interactive_disc(stack *l){
-    printf("\nPlay Hanoi Tower Menu:\n"
-            "1.Make a move: Typer 1.\n"
-            "2.Show current game state: Type 2.\n"
-            "3.Write in file current game state: Type 3.\n"
-            "0.Quit: Type 0 to end the game.\n");
+    printf("%sPlay Hanoi Tower Menu:%s"
+            "1.Make a move: Typer 1.%s"
+            "2.Show current game state: Type 2.%s"
+            "3.Write in file current game state: Type 3.%s"
+            "0.Quit: Type 0 to end the game.%s",NEWLINE,NEWLINE,NEWLINE,NEWLINE,NEWLINE,NEWLINE);
     int option;
     scanf("%d", &option);
     return option;
 }
 /*Switch for the command*/
 void playgame_directory(stack *l){
-    int option = interactive_disc(l);
+    int option = interactive_disc(l); //Get user's input
     int counter = 0;
     while(option != 0)
     {
         switch(option)
         {
-            case OPTION_1:
+            case OPTION_1: //OPTION 1: Make a move
                 makemove(l, counter);
                 counter++;
                 break;
-            case OPTION_2:
+            case OPTION_2: //OPTION 2: Show current status of the game
                 hanoiprintg(l);
                 break;
             case OPTION_3:
-                write_file(l, counter);
+                write_file(l, counter); //OPTION 3: Write moves in file
                 break;
             default:
-                printf("Invalid option\n");
+                printf("Invalid option.%s",NEWLINE);
                 break;
                 
         }
@@ -58,14 +58,14 @@ void makemove(stack *l, int counter)
 {
     int i, j;
     int getd;/*buf for disc*/
-    printf("\nMove disc from ");
+    printf("Move disc%sFrom: T",NEWLINE);
     scanf("%d", &l->top->torg);
-    printf(" to tower ");
+    printf("To: T");
     scanf("%d", &l->top->tdest);
     
     /*This looper starts with the top position the firts disc found is taken
      placed un the buff disc and that possition is changed to empty  '0'*/
-    for(i=0; i<l->num; i++)
+    for(i=0; i<l->moves; i++)
     {
         if(l->top->matrix[i][l->top->torg] != 0)
         {
@@ -77,7 +77,7 @@ void makemove(stack *l, int counter)
     /*This loop starts with the lowest position of the dest tower, when it finds the first
      *empty space drops the disc number contained in getd.
      */
-    for(i=l->num; i>0; i--)
+    for(i=l->moves; i>0; i--)
     {
      
         if(l->top->matrix[i][l->top->tdest] == 0)
@@ -102,27 +102,27 @@ void write_file(stack *l, int counter)
     fprintf(f, "\nNumber of moves: %d\n", counter);
     fprintf(f, "_______________________________");
     
-    for(int i=0; i<l->disk; i++){
+    for(int i=0; i<l->disks; i++){
         for(int k=0; k<NTOWERS; k++){
            int mat = l->top->matrix[k][i]; //Declaration of the value in position k i in the matrix
            /*PRINT DOT D-max TIMES*/ 
-           for(int j=0; j<l->disk-mat; j++)
+           for(int j=0; j<l->disks-mat; j++)
                 fprintf(f,"%s",DOT);
            
            /*PRINT UNDERSCORE max TIMES*/
            for(int j=0; j<mat; j++)
-                fprintf(f,"%s",UNDERSC);
+                fprintf(f,"%s",DASH);
            
            /*PRINT VERTICAL BAR*/
            fprintf(f,"%s",VERT_BAR);
            
            /*PRINT DOT D-max TIMES*/
-            for(int j=0; j<l->disk-mat; j++)
+            for(int j=0; j<l->disks-mat; j++)
                 fprintf(f,"%s",DOT);
            
            /*PRINT UNDERSCORE max TIMES*/
             for(int j=0; j<mat; j++)
-                fprintf(f,"%s",UNDERSC);
+                fprintf(f,"%s",DASH);
            
            //If it's not printing the last tower, then print a tabspace
            if(k<NTOWERS){
@@ -141,14 +141,14 @@ int end_game(stack *l)
     int **endmatrix;
     int equal = 1;
     /*space reservation for the end result matrix*/
-    endmatrix = (int **)malloc(l->disk * sizeof(int *)); 
-    for (int i=0; i<l->disk; i++)
+    endmatrix = (int **)malloc(l->disks * sizeof(int *)); 
+    for (int i=0; i<l->disks; i++)
          endmatrix[i]= (int *)malloc(NTOWERS * sizeof(int));
     
     
     /*Fill the endmatrix with the end disc positioning*/
     int i, j;
-    for(i=0; i<l->disk; i++)
+    for(i=0; i<l->disks; i++)
     {
         for(j=0; j<NTOWERS; j++)
         {
@@ -156,14 +156,14 @@ int end_game(stack *l)
         }
     }
     
-    for(i=0; i<l->disk; i++)
+    for(i=0; i<l->disks; i++)
     {
         int counter=1;
         endmatrix[i][mid_tower]= counter;
         counter++;
     }
     
-    for(i=0; i<l->disk; i++)
+    for(i=0; i<l->disks; i++)
     {
         for(j=0; j<NTOWERS; j++)
         {
@@ -177,27 +177,27 @@ int end_game(stack *l)
 /*Prints on the screen the full display game*/
 void hanoiprintg(stack *l){
     /*LOOP TO PRINT EACH LINE OF THE DRAWING OF THE GAME*/
-    for(int i=0; i<l->disk; i++){
+    for(int i=0; i<l->disks; i++){
         for(int k=0; k<NTOWERS; k++){
            int mat = l->top->matrix[k][i]; //Declaration of the value in position k i in the matrix
            /*PRINT DOT D-max TIMES*/ 
-           for(int j=0; j<l->disk-mat; j++)
+           for(int j=0; j<l->disks-mat; j++)
                 printf("%s",DOT);
            
            /*PRINT UNDERSCORE max TIMES*/
            for(int j=0; j<mat; j++)
-                printf("%s",UNDERSC);
+                printf("%s",DASH);
            
            /*PRINT VERTICAL BAR*/
            printf("%s",VERT_BAR);
            
            /*PRINT DOT D-max TIMES*/
-            for(int j=0; j<l->disk-mat; j++)
+            for(int j=0; j<l->disks-mat; j++)
                 printf("%s",DOT);
            
            /*PRINT UNDERSCORE max TIMES*/
             for(int j=0; j<mat; j++)
-                printf("%s",UNDERSC);
+                printf("%s",DASH);
            
            //If it's not printing the last tower, then print a tabspace
            if(k<NTOWERS){

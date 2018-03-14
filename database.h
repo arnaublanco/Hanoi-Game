@@ -5,8 +5,6 @@
 #include <string.h>
 #include <stdlib.h>
 
-#define NUL -1
-
 //Declaration of a node of the linked list
 struct node{
     int **matrix; //Matrix that stores the position of the disks
@@ -19,8 +17,8 @@ typedef struct node node_t;
 //Declaration of the list
 typedef struct{
     node_t *top; //Variable that points to the last move
-    int num; //Total number of moves
-    int disk; //Total number of disks
+    int moves; //Total number of moves
+    int disks; //Total number of disks
 }stack;
 
 void movedisk(stack *list, int towerorg, int towerdest);

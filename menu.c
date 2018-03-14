@@ -10,11 +10,10 @@
 
 int play_game(stack *l)
 {
-    /*COUNTER INSIDE A LOOP*/
     int exit = 1;
     while(end_game(l) != 1 && exit != 0)
     {  
-        playgame_directory(l);
+        playgame_directory(l); //Call the function that shows the menu to the user and scans the option they choose
         printf("Type 0 again to exit.");
         scanf("%d", &exit);
     }
@@ -31,15 +30,15 @@ void command(char **cmd, int narg, stack *l){
           for(int i=0; i < narg; i++){
             if(strcmp(DCMD,cmd[i])==0 && i+1<narg){ /*EXECUTE -d COMMAND IF SPECIFIED*/
                 i++; //Increase i by 1 to go to the next command           
-                l->disk = atoi(cmd[i]); //Change the number of disks to cmd[i]
+                l->disks = atoi(cmd[i]); //Change the number of disks to cmd[i]
                 disks_changed = TRUE; //The number of disks has changed
             }else if(strcmp(FCMD,cmd[i])==0){ /*EXECUTE -f COMMAND IF SPECIFIED*/
                 //If there isn't another command afterwards, it means the program has to create a file. Otherwise, it has to show the moves on screen.
                 if(cmd[i+1]){
                     if(strcmp(DCMD,cmd[i+1])==0 || strcmp(OCMD,cmd[i+1])==0){
                         //Call hanoiprint as many times as moves there are
-                        for(int w=0; w<l->num; w++){
-                            hanoiprint(l->top,l->num);
+                        for(int w=0; w<l->moves; w++){
+                            hanoiprint(l->top,l->moves);
                         }
                     }else{
                         i++; //Increase i by 1 to go to the next command
@@ -48,8 +47,8 @@ void command(char **cmd, int narg, stack *l){
                     }
                 }else{
                     //Call hanoiprint as many times as moves there are
-                    for(int w=0; w<l->num; w++){
-                        hanoiprint(l->top,l->num);
+                    for(int w=0; w<l->moves; w++){
+                        hanoiprint(l->top,l->moves);
                     }
                 }
             }else if(strcmp(OCMD,cmd[i])==0 && i+1<narg){ /*EXECUTE -o COMMAND IF SPECIFIED*/           
@@ -69,7 +68,7 @@ void command(char **cmd, int narg, stack *l){
     }
     //If the number disks has not been changed, then set it to its default value
     if(!disks_changed){
-        l->disk = NDISKS;
+        l->disks = NDISKS;
     }
 }
 
@@ -87,33 +86,33 @@ void create_file(stack *list, char *name, int new_file){
         exit(0);
     }
     /*LOOP THAT WILL PRINT ALL THE MOVES IN THE FILE*/
-    for(int j=0; j < list->num; j++){
+    for(int j=0; j < list->moves; j++){
        node_t *current_node = list->top; //Create a node that points to the last node
        /*LOOP TO GO THE CORRESPONDING NODE. Ex: (5 MOVES) If j = 0 (that is, node 1), the loop runs moves-(j+1) = 5-(0+1)=4 times */
-       for(int m=list->num; m>j+1; m--){
+       for(int m=list->moves; m>j+1; m--){
            current_node = current_node->prev;
        }
-       for(int i=0; i<list->disk; i++){
+       for(int i=0; i<list->disks; i++){
         for(int k=0; k<NTOWERS; k++){
            int mat = list->top->matrix[k][i]; //Declaration of the value in position k i in the matrix
-           /*PRINT DOT D-max TIMES*/ 
-           for(int j=0; j<list->disk-mat; j++)
+           /*PRINT DOT number of disks-mat TIMES*/ 
+           for(int j=0; j<list->disks-mat; j++)
                 printf("%s",DOT);
            
-           /*PRINT UNDERSCORE max TIMES*/
+           /*PRINT UNDERSCORE mat TIMES*/
            for(int j=0; j<mat; j++)
-                printf("%s",UNDERSC);
+                printf("%s",DASH);
            
            /*PRINT VERTICAL BAR*/
            printf("%s",VERT_BAR);
            
-           /*PRINT DOT D-max TIMES*/
-            for(int j=0; j<list->disk-mat; j++)
+           /*PRINT DOT umber of disks-mat TIMES*/
+            for(int j=0; j<list->disks-mat; j++)
                 printf("%s",DOT);
            
-           /*PRINT UNDERSCORE max TIMES*/
+           /*PRINT UNDERSCORE mat TIMES*/
             for(int j=0; j<mat; j++)
-                printf("%s",UNDERSC);
+                printf("%s",DASH);
            
            //If it's not printing the last tower, then print a tabspace
            if(k<NTOWERS){
@@ -125,7 +124,6 @@ void create_file(stack *list, char *name, int new_file){
     } 
     }
 }
-
 
 int display_menu()
 {
@@ -142,17 +140,18 @@ int display_menu()
 void menu_directory(stack *l)
 {
     int option;
-    option = display_menu();
+    option = display_menu(); //Call function that shows menu to user and scans option
     
+    //While 'option' is not 0, show the menu
     while (option != 0)
     {
         switch(option)
         {
-            case OPTION_1:
+            case OPTION_1: //OPTION 1: Show moves of the game
                 show_game(l);
                 break;
-            case OPTION_2:
-                option = play_game(l);
+            case OPTION_2: //OPTION 2: Play the game yourself
+                option = play_game(l); //
                 break;
             default:
                 printf("\nInvalid option.\n");
@@ -164,12 +163,18 @@ void menu_directory(stack *l)
     }
 }
 void show_game(stack *l){
-    int move;
+    int move; //Declare move which stores the input of the user
     node_t *current_node = l->top; //Create a node that points to the last node
-    printf("\nType the number of the move you want to see:");
-    scanf("%d",&move);
-    for(int m=l->num; m>move+1; m--){
-        current_node = current_node->prev;
+    printf("%sType the number of the move you want to see: ",NEWLINE);
+    scanf("%d",&move); //Scan user's input
+    //If the user's input is not valid, then print a warning message
+    if(move >= 0 && move <= l->moves){
+        //Loop to jump from one node to another
+        for(int m=l->moves; m>move; m--){
+            current_node = current_node->prev;
+        }
+        hanoiprint(current_node,l->disks); //Print the move
+    }else{
+        printf("This move does not exist.%s",NEWLINE);
     }
-    hanoiprint(current_node,l->disk);
 }
