@@ -169,7 +169,7 @@ void show_game(stack *l){
     printf("\nType the number of the move you want to see:");
     scanf("%d",&move);
     for(int m=l->num; m>move+1; m--){
-        hanoiprint(current_node,l->disk);
         current_node = current_node->prev;
     }
+    hanoiprint(current_node,l->disk);
 }

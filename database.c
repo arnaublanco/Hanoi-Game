@@ -33,13 +33,8 @@ void movedisk(stack *list, int towerorg, int towerdest){
 }
 
 void push(stack *l,node_t *newnode){  
-    node_t aux;
-    aux=*l->top; 
-    //memcpy(&aux,l->top, sizeof(node_t)); 
-    l->top=newnode;
-    //memcpy(l->top,newnode, sizeof(node_t));
-    l->top->prev=&aux;
-    //memcpy(l->top->prev,&aux, sizeof(node_t));
+    newnode->prev=l->top; //Newnode points to old node 
+    l->top=newnode; 
     l->top->depth+=1;    
 }
 
