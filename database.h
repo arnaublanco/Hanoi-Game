@@ -21,9 +21,8 @@ typedef struct{
     int disks; //Total number of disks
 }stack;
 
-void movedisk(stack *list, int towerorg, int towerdest);
 void push(stack *list,node_t *newnode);
 void createFirstNode(node_t *newnode,stack *list);
-node_t* encapsulateinfo(int n);
+node_t* encapsulateinfo(int disks, int torg, int tdest, int depth);
 
 #endif /* DATABASE_H */

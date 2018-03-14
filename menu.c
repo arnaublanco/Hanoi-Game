@@ -8,6 +8,7 @@
 #include "playgame.h"
 #include "main.h"
 
+/*FUNCTION THAT ALLOWS THE USER TO PLAY THE GAME*/
 int play_game(stack *l)
 {
     int exit = 1;
@@ -26,7 +27,7 @@ void command(char **cmd, int narg, stack *l){
     char *name; //Variable that stores the name of the file that the user may want to create
     /*CHECK IF THE hanoiplus COMMAND HAS BEEN ENTERED*/
     if(narg > 1){
-        if(strcmp(HPLUS,cmd[1])==0){/*SEGMENTATION FAULT as there is no argument*/
+        if(strcmp(HPLUS,cmd[1])==0){
           for(int i=0; i < narg; i++){
             if(strcmp(DCMD,cmd[i])==0 && i+1<narg){ /*EXECUTE -d COMMAND IF SPECIFIED*/
                 i++; //Increase i by 1 to go to the next command           
@@ -71,7 +72,7 @@ void command(char **cmd, int narg, stack *l){
         l->disks = NDISKS;
     }
 }
-
+/*FUNCTION THAT CREATES A FILE*/
 void create_file(stack *list, char *name, int new_file){
     FILE *f; //Declare the file
     //If new_file is true, then create a new file or overwrite it. Otherwise, append the content at the end of it.
@@ -124,19 +125,19 @@ void create_file(stack *list, char *name, int new_file){
     } 
     }
 }
-
+/*FUNCTION THAT DISPLAY THE MENU ON-SCREEN*/
 int display_menu()
 {
     int option;
-    printf("\nMenu Options.\n"
-            "1.Show Hanoi solution. Type 1.\n"
-            "2.Play Hanoi. Type 2.\n"
-            "0.Exit. Type 0.\n\n"
-            "Option: ");
+    printf("%sMenu Options.%s"
+            "1.Show Hanoi solution. Type 1.%s"
+            "2.Play Hanoi. Type 2.%s"
+            "0.Exit. Type 0.%s%s"
+            "Option: ",NEWLINE,NEWLINE,NEWLINE,NEWLINE,NEWLINE,NEWLINE);
     scanf("%d", &option);
     return option;
 }
-
+/*FUNCTION THAT EXECUTES THE OPTION THAT USER CHOOSES*/
 void menu_directory(stack *l)
 {
     int option;
@@ -162,6 +163,7 @@ void menu_directory(stack *l)
         }
     }
 }
+/*FUNCTION THAT SHOWS A MOVE ON-SCREEN*/
 void show_game(stack *l){
     int move; //Declare move which stores the input of the user
     node_t *current_node = l->top; //Create a node that points to the last node

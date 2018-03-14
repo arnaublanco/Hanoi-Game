@@ -10,9 +10,10 @@
 #define DOT "." //Declaration of a dot
 #define TABSPACE "\t" //Declaration of tabulation space
 #define NEWLINE "\n" //Declaration of new line
+#define EMPTY 0 //Declaration of empty value
 
 /*Declaration of the functions*/
-void move(int towerorg, int towerdest,stack *list);
+void move(int depth, int towerorg, int towerdest, stack *list);
 void hanoi(int nd, int torg, int tdest, int taux, stack *list);
 void hanoiprint(node_t *current_node, int numdisks);
 
