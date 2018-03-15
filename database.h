@@ -4,7 +4,8 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#define MAX_FIELD 50
+
+#define NUL -1
 
 //Declaration of a node of the linked list
 struct node{
@@ -18,14 +19,13 @@ typedef struct node node_t;
 //Declaration of the list
 typedef struct{
     node_t *top; //Variable that points to the last move
-    int moves; //Total number of moves
-    int disks; //Total number of disks
-    char fname[MAX_FIELD];
-    char operation[MAX_FIELD];
+    int num; //Total number of moves
+    int disk; //Total number of disks
 }stack;
 
+void movedisk(stack *list, int towerorg, int towerdest);
 void push(stack *list,node_t *newnode);
 void createFirstNode(node_t *newnode,stack *list);
-node_t* encapsulateinfo(int disks, int torg, int tdest, int depth);
+node_t* encapsulateinfo(int n);
 
 #endif /* DATABASE_H */
