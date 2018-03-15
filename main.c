@@ -53,7 +53,6 @@ int main(int argc, char **argv){
     
     /*STACK INITIALISATION*/
     stack list;
-<<<<<<< HEAD
     list.moves = EMPTY; //Initialise number of moves as 0
     list.disks = NDISKS; //By default, the number of disks is NDISKS
     strlcpy(list.operation,APCMD,MAX_FIELD); //By default, operation is "ap"
@@ -85,16 +84,6 @@ int main(int argc, char **argv){
     hanoi(list.disks,TSTART,TAUX,TEND,&list); //Call function that calculates the number of moves of the game
     create_file(&list);
     menu_directory(&list); //Call function that shows the menu to the user
-=======
-    command(argv,argc,&list);
-    /*REQUEST FOR THE NUMBER OF DISKS*/
-    int n = NDISKS; //By default there will be 5 disks
-    list.disk=n;
-    node_t* newnode=encapsulateinfo(n); //Initialise the matrix according to the number of disks
-    createFirstNode(newnode,&list); //create new node function
-    hanoiprint(list.top,list.disk);
-    hanoi(n,0,1,2,&list); //Call hanoi function
->>>>>>> parent of d56252e... epokr
     
     return 0;
 }
