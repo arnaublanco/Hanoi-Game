@@ -53,12 +53,36 @@ int main(int argc, char **argv){
     
     /*STACK INITIALISATION*/
     stack list;
-    command(argv,argc,&list);
+    list.moves = EMPTY; //Initialise number of moves as 0
+    list.disks = NDISKS; //By default, the number of disks is NDISKS
+    strlcpy(list.operation,APCMD,MAX_FIELD); //By default, operation is "ap"
+    int option = 1;
+    int i = 0;
+    while(i < argc){
+        if(argv[i][0] == '-' && argv [i][1] == 'd' && argv[i+1]){
+            list.disks = atoi(argv[i+1]);
+        }
+        if(argv[i][0] == '-' && argv [i][1] == 'f' && argv[i+1]){
+            strcpy(list.fname,argv[i+1]);
+            option = 0;
+        }
+        if(argv[i][0] == '-' && argv [i][1] == 'o' && argv[i+1]){
+            strlcpy(list.operation,argv[i+1],MAX_FIELD);
+        }
+        i++;
+    }
+    //By default, fname is hanoiplus-<ndisks>d
+    if(option==1){
+        char *aux;
+        sprintf(aux,"%s-%dd",HPLUS,list.disks);
+        strlcpy(list.fname,aux,MAX_FIELD);
+    }
     
     /*REQUEST FOR THE NUMBER OF DISKS*/
     node_t* newnode = encapsulateinfo(list.disks,TSTART,TSTART,EMPTY); //Initialise the matrix according to the number of disks in a node
     createFirstNode(newnode,&list); //Create the first node
     hanoi(list.disks,TSTART,TAUX,TEND,&list); //Call function that calculates the number of moves of the game
+    create_file(&list);
     menu_directory(&list); //Call function that shows the menu to the user
     
     return 0;
