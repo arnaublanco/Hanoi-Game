@@ -20,8 +20,9 @@ void play_game(stack *l);
 void show_game(stack *l);
 int menu_display();
 void menu_directory();
-void command(char **cmd, int narg, stack *l);
-void create_file(stack *l, char *name, int new_file);
+void command(char **argv, int argc, stack *list);
+void create_file(stack *list);
+void file_print(stack *list, FILE *f, node_t *cnode);
 
 
 #endif	/* MENU_H */

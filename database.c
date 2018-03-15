@@ -5,7 +5,7 @@
 #include "database.h"
 #include "main.h"
 
-void movedisk(stack *list, int towerorg, int towerdest){
+void movedisk(stack *list, int towerorg, int towerdest, int depth){
     int n=list->disk;
     node_t* newnode=encapsulateinfo(n);
     int aux;
@@ -14,12 +14,11 @@ void movedisk(stack *list, int towerorg, int towerdest){
             newnode->matrix[c][i]=list->top->matrix[c][i];
         }
     }
-    
-    //memcpy(&newnode,list->top,sizeof(node_t));
     for(int c = 0; c < list->disk; c++){
         if(list->top->matrix[c][towerorg]!=0){
             newnode->matrix[c][towerorg]=0;
             aux=list->top->matrix[c][towerorg];
+            newnode->disk_moved = aux+1; //Disk moved is equal to aux
             break;
         }  
     }
@@ -29,18 +28,18 @@ void movedisk(stack *list, int towerorg, int towerdest){
             break;
         }
     }
+    newnode->tdest = towerdest;
+    newnode->torg = towerorg;
+    newnode->depth = depth;
     push(list,newnode);
 }
 
 void push(stack *l,node_t *newnode){  
-    node_t aux;
-    aux=*l->top; 
-    //memcpy(&aux,l->top, sizeof(node_t)); 
-    l->top=newnode;
-    //memcpy(l->top,newnode, sizeof(node_t));
-    l->top->prev=&aux;
-    //memcpy(l->top->prev,&aux, sizeof(node_t));
-    l->top->depth+=1;    
+    newnode->prev = l->top; //Newnode points now to old node
+    l->top = newnode; //Top points now to new node
+    newnode->move_num = l->num;
+    l->num++;
+    printf(LOGLISTOPS,newnode->move_num);
 }
 
 
@@ -54,7 +53,9 @@ void createFirstNode(node_t *newnode, stack *list){
             }
         }
     }
+    newnode->move_num=0;
     list->top=newnode;
+    
     //  memcpy(&list->top,&newnode,sizeof(node_t));
 }
 node_t* encapsulateinfo(int n){

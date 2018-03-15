@@ -6,21 +6,19 @@
 #include "database.h"
 #include "playgame.h"
 //Function that prints and creates a new move
-void move(int towerorg, int towerdest,stack *list){
-    movedisk(list, towerorg, towerdest);
-    //printf("%d",list->top->matrix[0][2]);
-    //printf("Move one disc from %d to %d\n", towerorg, towerdest);
-    //new_node(D,towerorg,towerdest,nd,l); //Create a new node
+void move(int towerorg, int towerdest,stack *list, int depth){
+    movedisk(list, towerorg, towerdest, depth);
+    
     hanoiprint(list->top,list->disk);
 }
 
 void hanoi(int nd, int torg, int tdest, int taux, stack *list){
     if (nd == 1){
-        move(torg, tdest, list);
+        move(torg, tdest, list, list->disk-nd);
         }
     else{
         hanoi(nd - 1, torg, taux, tdest, list);
-        move(torg, tdest, list);
+        move(torg, tdest, list, list->disk-nd);
         hanoi(nd - 1, taux, tdest, torg, list);
     }                                                     
 }
@@ -31,10 +29,14 @@ int main(int argc, char **argv){
     
     /*STACK INITIALISATION*/
     stack list;
+    list.num = 0;
+    strcpy(list.operation,"ap");
     command(argv,argc,&list);
     /*REQUEST FOR THE NUMBER OF DISKS*/
     node_t* newnode=encapsulateinfo(list.disk); //Initialise the matrix according to the number of disks
     createFirstNode(newnode,&list); //create new node function
+    hanoi(list.disk,0,1,2,&list);
+    create_file(&list);
     menu_directory(&list);
     
     
@@ -42,6 +44,8 @@ int main(int argc, char **argv){
 }
 
 void hanoiprint(node_t *newnode,int numdisks){
+    printf(LOGDISKS,newnode->move_num,newnode->disk_moved,newnode->torg,newnode->tdest);
+    printf("%s",NEWLINE);
     /*LOOP TO PRINT EACH LINE OF THE DRAWING OF THE GAME*/
     for(int i=0; i<numdisks; i++){
         for(int k=0; k<NTOWERS; k++){
