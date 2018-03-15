@@ -11,10 +11,12 @@
 
 /*Declaration of functions*/
 void basic_write_file(stack *l, int counter);
+void init_matrix(stack *l);
 void hanoiprintg(stack *l);
 int end_game(stack *l);
 void write_file(stack *l, int counter);
 void makemove(stack *l, int counter);
+void init_game(stack *l);
 void playgame_directory(stack *l);
 int interactive_disc(stack *l);
 
