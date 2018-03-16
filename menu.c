@@ -64,7 +64,7 @@ void create_file(stack *list){
     fprintf(f,"File operation: %s\n\n",list->operation);
     fprintf(f,"Total number of moves: %d\n",list->num);
     //time_t t = time(NULL);
-    fprintf(f,"Total number of moves: %s\n",t);    
+    //fprintf(f,"Total number of moves: %s\n",t);    
     for(int c=0; c<=list->num; c++){
         int m;
         node_t *cnode;

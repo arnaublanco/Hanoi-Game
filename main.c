@@ -44,7 +44,7 @@ int main(int argc, char **argv){
 }
 
 void hanoiprint(node_t *newnode,int numdisks){
-    printf(LOGDISKS,newnode->move_num,newnode->disk_moved,newnode->torg,newnode->tdest);
+    printf(LOGDISKS,newnode->move_num,newnode->depth,newnode->disk_moved,newnode->torg,newnode->tdest);
     printf("%s",NEWLINE);
     /*LOOP TO PRINT EACH LINE OF THE DRAWING OF THE GAME*/
     for(int i=0; i<numdisks; i++){
