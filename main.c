@@ -30,6 +30,7 @@ int main(int argc, char **argv){
     /*STACK INITIALISATION*/
     stack list;
     list.num = 0;
+    list.disk=NDISKS;
     strcpy(list.operation,"ap");
     command(argv,argc,&list);
     /*REQUEST FOR THE NUMBER OF DISKS*/

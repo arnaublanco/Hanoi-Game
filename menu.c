@@ -63,7 +63,13 @@ void create_file(stack *list){
     fprintf(f,"Output filename: %s\n",list->fname);
     fprintf(f,"File operation: %s\n\n",list->operation);
     fprintf(f,"Total number of moves: %d\n",list->num);
-    //time_t t = time(NULL);
+    time_t rawtime;
+  struct tm * timeinfo;
+
+  time ( &rawtime );
+  timeinfo = localtime ( &rawtime );
+  printf ( "Current local time and date: %s", asctime (timeinfo) );
+
     //fprintf(f,"Total number of moves: %s\n",t);    
     for(int c=0; c<=list->num; c++){
         int m;
