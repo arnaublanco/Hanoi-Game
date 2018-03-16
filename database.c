@@ -1,3 +1,13 @@
+/*
+ * File: database.c
+ * Authors: Gabriel Graells, Arnau Blanco, Asfandyar Abbasi.
+ * 
+ * 
+ * 
+ * This file contains the "movedisk", "encapsulate" and "push" function which are 
+ * used to create a new node edit data in new node and add the node in the list.
+ */
+
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -5,20 +15,23 @@
 #include "database.h"
 #include "main.h"
 
-void movedisk(stack *list, int towerorg, int towerdest, int depth){
+void movedisk(int towerorg, int towerdest,stack *list, int depth){
     int n=list->disk;
-    node_t* newnode=encapsulateinfo(n);
+    node_t* newnode=encapsulateinfo(n); //encapsulateinfo returns the node as a pointer.
     int aux;
+    //copying the matrix of last move and storing it in the current move. 
     for(int c = 0; c < list->disk; c++){
         for(int i = 0; i < NTOWERS; i++){
             newnode->matrix[c][i]=list->top->matrix[c][i];
         }
     }
+    //Making changes required in the matrix.
     for(int c = 0; c < list->disk; c++){
+        //finding the disk to move
         if(list->top->matrix[c][towerorg]!=0){
             newnode->matrix[c][towerorg]=0;
-            aux=list->top->matrix[c][towerorg];
-            newnode->disk_moved = aux+1; //Disk moved is equal to aux
+            aux=list->top->matrix[c][towerorg]; //
+            newnode->disk_moved = aux+1; //Disk to be moved stored in aux
             break;
         }  
     }
@@ -56,7 +69,6 @@ void createFirstNode(node_t *newnode, stack *list){
     newnode->move_num=0;
     list->top=newnode;
     
-    //  memcpy(&list->top,&newnode,sizeof(node_t));
 }
 node_t* encapsulateinfo(int n){
     node_t *newnode=(node_t *)malloc(sizeof(node_t));

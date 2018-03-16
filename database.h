@@ -28,7 +28,15 @@ typedef struct{
     char operation[MAX_FIELD];
 }stack;
 
-void movedisk(stack *list, int towerorg, int towerdest, int depth);
+typedef struct gnode{
+    int **matrix; //Matrix that stores the position of the disks
+    int torg; //Tower origin of the disk moved
+    int tdest; //Tower destination of the disk moved
+    int move_num; //Move 
+    int disk;
+}gstruct;
+
+void movedisk(int towerorg, int towerdest,stack *list, int depth);
 void push(stack *list,node_t *newnode);
 void createFirstNode(node_t *newnode,stack *list);
 node_t* encapsulateinfo(int n);

@@ -16,12 +16,12 @@
 #define APPEND 2
 
 //Declaration of the functions
-void play_game(stack *l);
+void play_game(gstruct *ll, stack *l);
 void show_game(stack *l);
 int menu_display();
 void menu_directory();
-void command(char **argv, int argc, stack *list);
-void create_file(stack *list);
+int command(char **argv, int argc, stack *list);
+void create_file(stack *list, char **argv, int argc);
 void file_print(stack *list, FILE *f, node_t *cnode);
 
 

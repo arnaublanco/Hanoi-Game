@@ -10,7 +10,7 @@
 #define DOT "." //Declaration of a dot
 #define TABSPACE "\t" //Declaration of tabulation space
 #define NEWLINE "\n" //Declaration of new line
-#define LINE "=============================================" //Declaration of line
+#define LINE "=============================================================" //Declaration of line
 
 #define LOGS 1 //Choose between 0 or non-zero number
 #define LOGLIST 0
@@ -28,5 +28,5 @@
 void move(int towerorg, int towerdest,stack *list, int depth);
 void hanoi(int nd, int torg, int tdest, int taux, stack *list);
 void hanoiprint(node_t *newnode, int numdisks);
-
+void clearmemory (stack *list);
 #endif /* MAIN_H */

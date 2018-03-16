@@ -10,11 +10,13 @@
 
 
 /*Functions*/
-void basic_write_file(stack *l, int counter);
-void hanoiprintg(stack *l);
-int end_game(stack *l);
-void write_file(stack *l, int counter);
-void makemove(stack *l, int counter);
-void playgame_directory(stack *l);
-int interactive_disc(stack *l);
+void show_hint(int counter, stack *l);
+void hanoiprintg(gstruct *newnode,int numdisks);
+void init_matrix(gstruct *l);
+void basic_write_file(gstruct *l, int counter, int getd);
+int end_game(gstruct *l);
+void write_file(gstruct *l, int counter);
+void makemove(gstruct *l, int counter);
+int playgame_directory(gstruct *l, stack *ll);
+int interactive_disc(gstruct *l);
 #endif /* PLAYGAME_H */
