@@ -1,3 +1,10 @@
+/*Created by; Asfandyar Abbasi, Arnau Blanco and Gabriel Graells Solé.
+ * 
+ * 
+ * .h File for "main.c"
+ * 
+ * 
+ */
 #ifndef MAIN_H
 #define MAIN_H
 

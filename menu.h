@@ -1,3 +1,10 @@
+/*Created by; Asfandyar Abbasi, Arnau Blanco and Gabriel Graells Solé.
+ * 
+ * 
+ * .h File for "menu.c"
+ * 
+ * 
+ */
 #ifndef MENU_H
 #define	MENU_H
 #include "database.h"
@@ -5,20 +12,14 @@
 #define PLAYGAME 1
 #define SHOWGAME 2
 /*CONSTANT VARIABLES FOR THE COMMANDS*/
-#define HPLUS "hanoiplus"
-#define DCMD "-d"
-#define FCMD "-f"
-#define OCMD "-o"
-#define APCMD "ap"
-#define WCMD "w"
+
 #define TRUE 1
 #define FALSE 0
-#define APPEND 2
 
 //Declaration of the functions
 void play_game(gstruct *ll, stack *l);
 void show_game(stack *l);
-int menu_display();
+int display_menu();
 void menu_directory();
 int command(char **argv, int argc, stack *list);
 void create_file(stack *list, char **argv, int argc);

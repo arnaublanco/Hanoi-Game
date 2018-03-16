@@ -1,12 +1,16 @@
-
+/*Created by; Asfandyar Abbasi, Arnau Blanco and Gabriel Graells Solé.
+ * 
+ * 
+ * .h File for "playgame.c"
+ * 
+ * 
+ */
 #ifndef PLAYGAME_H
 #define PLAYGAME_H
 /*variable*/
-#define OPTION 35
 #define OPTION_1 1
 #define OPTION_2 2
 #define OPTION_3 3
-#define NTOWER 2
 
 
 /*Functions*/

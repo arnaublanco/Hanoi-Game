@@ -2,7 +2,8 @@
  * File: menu.c
  * Authors: Gabriel Graells, Arnau Blanco, Asfandyar Abbasi.
  * 
- * 
+ * This file contains all the funtions relating to the menu and selecting the options. It also
+ * contains the command function which compares the commands by the user with different values.
  * 
  */
 #include <stdio.h>
@@ -14,11 +15,11 @@
 #include "main.h"
 
 void play_game(gstruct *ll, stack *l)
-{
+{int end=1;
     /*COUNTER INSIDE A LOOP*/
-    while(end_game(l) != 1)
+    while(end_game(ll) != 1&&end!=0)
     {
-        playgame_directory(ll,l);
+       end=playgame_directory(ll,l);
     }
 }
 /*FUNCTION THAT EXECUTES THE hanoiplus COMMAND*/
@@ -45,7 +46,7 @@ int command(char **argv, int argc, stack *list){
     }
     return option;
 }
-
+// Creating a file to save the matrix
 void create_file(stack *list, char **argv, int argc){
     FILE *f; //Declare the file
     char path[MAX_FIELD]; //Declaration of the path of the file

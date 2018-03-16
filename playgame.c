@@ -135,44 +135,46 @@ void write_file(gstruct *l, int counter)
     
     fprintf(f, "\n_______________________________");
     fprintf(f, "\nNumber of moves: %d\n", counter);
-    fprintf(f, "_______________________________");
+    fprintf(f, "_______________________________\n");
     
-    for(int i=0; i<l->disk; i++){
+  int dots, bars=0;
+       //hanoiprint(list->top,list->disks);
+       for(int i=0; i<l->disk; i++){
         for(int k=0; k<NTOWERS; k++){
-           int dashes = l->matrix[i][k]; //Declaration of the value in position k i in the matrix
-           int dots=l->disk-dashes;
-           /*PRINT DOT D-max TIMES*/ 
+           bars = l->matrix[i][k]; //Number to bars to print same as the size of disk.
+           dots=l->disk-bars; //Calculating number of dots to print
+           /*PRINT DOT number of disks-mat TIMES*/ 
            for(int j=0; j<dots; j++)
-                fprintf(f, ".");
+                fprintf(f,"%s",".");
            
-           /*PRINT UNDERSCORE max TIMES*/
-           for(int j=0; j<dashes; j++)
-                fprintf(f, "-");
+           /*PRINT UNDERSCORE mat TIMES*/
+           for(int j=0; j<bars; j++)
+                fprintf(f,"%s","-");
            
            /*PRINT VERTICAL BAR*/
-           fprintf(f, "|");
+           fprintf(f,"%s","|");
            
-           /*PRINT UNDERSCORE max TIMES*/
-            for(int j=0; j<dashes; j++)
-                fprintf(f, "-");
+              /*PRINT UNDERSCORE mat TIMES*/
+            for(int j=0; j<bars; j++)
+                fprintf(f,"%s","-");
            
-           /*PRINT DOT D-max TIMES*/
+           /*PRINT DOT umber of disks-mat TIMES*/
             for(int j=0; j<dots; j++)
-                fprintf(f, ".");
+                fprintf(f,"%s",".");
            
-           
+        
            
            //If it's not printing the last tower, then print a tabspace
-           if(k<NTOWERS-1){
-               fprintf(f, "%s",TABSPACE);
-           }
-           else{
-               fprintf(f, "\n");
+           if(k<NTOWERS){
+               fprintf(f,"%s","\t");
+           }else{
+               fprintf(f,"%s","\n");
            }
         }
-    }
-    fprintf(f, "\n");
-    
+       fprintf(f,"%s","\n"); 
+    } 
+    fprintf(f,"%s","\n");
+    fclose(f);
 }
 /*Creates the last possition of the game and compares it to the current one if match the game ends*/
 int end_game(gstruct *l)
@@ -228,50 +230,11 @@ void basic_write_file(gstruct *l, int counter, int getd)
     }
     sprintf(buf,"\n\nMove disk %d from tower %d to tower %d.\n",getd,l->torg, l->tdest); 
     fputs(buf, f);
-    /*LOOP THAT WILL PRINT ALL THE MOVES IN THE FILE*/
-
-    int dots, bars=0;
-       //hanoiprint(list->top,list->disks);
-       for(int i=0; i<l->disk; i++){
-        for(int k=0; k<NTOWERS; k++){
-           bars = l->matrix[i][k]; //Number to bars to print same as the size of disk.
-           dots=l->disk-bars; //Calculating number of dots to print
-           /*PRINT DOT number of disks-mat TIMES*/ 
-           for(int j=0; j<dots; j++)
-                fprintf(f,"%s",".");
-           
-           /*PRINT UNDERSCORE mat TIMES*/
-           for(int j=0; j<bars; j++)
-                fprintf(f,"%s","-");
-           
-           /*PRINT VERTICAL BAR*/
-           fprintf(f,"%s","|");
-           
-              /*PRINT UNDERSCORE mat TIMES*/
-            for(int j=0; j<bars; j++)
-                fprintf(f,"%s","-");
-           
-           /*PRINT DOT umber of disks-mat TIMES*/
-            for(int j=0; j<dots; j++)
-                fprintf(f,"%s",".");
-           
-        
-           
-           //If it's not printing the last tower, then print a tabspace
-           if(k<NTOWERS){
-               fprintf(f,"%s","\t");
-           }else{
-               fprintf(f,"%s","\n");
-           }
-        }
-       fprintf(f,"%s","\n"); 
-    } 
-    fprintf(f,"%s","\n");
 
     fclose(f);
     
 }
-
+// initializing the matrix for the user to play game
 void init_matrix(gstruct *l)
 {
     l->matrix=(int **)malloc(l->disk * sizeof(int *));
@@ -289,7 +252,7 @@ void init_matrix(gstruct *l)
     }
        
 }
-
+//Printing the matrix on screen from the node given.
 void hanoiprintg(gstruct *newnode,int numdisks){
     printf("%s",NEWLINE);
     /*LOOP TO PRINT EACH LINE OF THE DRAWING OF THE GAME*/
