@@ -33,10 +33,10 @@ int main(int argc, char **argv){
     printf("HANOI GAME\n===========\n\n");
     /*STACK INITIALISATION*/
     stack list; //stack declaration
-    gstruct g;
+    gstruct g; //struct top play game
      g.disk=NDISKS;
-    init_matrix(&g);
-    list.num = 0;
+    init_matrix(&g); //initializing the pplay game matrix.
+    list.num = 0; //number of moves at the star will be zero.
     list.disk=NDISKS;
     strcpy(list.operation,"ap");
     int printfile = command(argv,argc,&list); 
@@ -45,6 +45,7 @@ int main(int argc, char **argv){
     node_t* newnode=encapsulateinfo(list.disk); //Initialise the matrix according to the number of disks
     createFirstNode(newnode,&list); //create new node function
     hanoi(list.disk,0,1,2,&list);
+    //checks if it has to create a file or just print the matrice on the screen.
     if(printfile==1){
         create_file(&list, argv, argc);
     }
@@ -107,6 +108,7 @@ void hanoiprint(node_t *newnode,int numdisks){
     }
     printf("\n");
 }
+//frees the memory from each node and matrix.
 void clearmemory (stack *list){
     for(int c=0; c<=list->num; c++){
         int m;
@@ -115,6 +117,12 @@ void clearmemory (stack *list){
         for(m=list->num; m>c; m--){
             cnode = cnode->prev;
         }
+        for(int c=0;c<list->disk;c++){
+            for (int k= 0; k<NTOWERS; k++){    
+                free(*cnode->matrix[c][k]);    
+            }
+        }
+
         free(cnode);
     }
 }
